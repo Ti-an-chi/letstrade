@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MarketPort</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">MarketPort</a>
+                <div>
+                    <a href="profile.html" class="btn btn-secondary btn-small">View Profile</a>
+                    <a href="#" id="logoutBtn" class="btn btn-secondary btn-small">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="dashboard-header">
+            <h1>Dashboard</h1>
+            <p>Welcome back, <span id="sellerName">Seller</span>!</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalProducts">0</div>
+                <div class="stat-label">Total Products</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="profileViews">0</div>
+                <div class="stat-label">Profile Views</div>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+            <a href="upload.html" class="btn btn-primary">Add New Product</a>
+        </div>
+
+        <h2>Your Products</h2>
+        <div class="product-grid" id="sellerProducts">
+            <!-- Seller's products will be loaded here -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>MarketPort - Simple portfolio marketplace for sellers</p>
+        </div>
+    </footer>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

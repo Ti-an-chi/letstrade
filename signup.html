@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - MarketPort</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">MarketPort</a>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+    <section id="signupSection" class="form-container">
+        <div class="form-container">
+            <h1 class="form-title">Create Seller Account</h1>
+        <div id="message" class="message" style="display: none;"></div>
+            
+            <form id="signupForm">
+                <div class="form-group" id="uname">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" required>
+                    <div class="input-hint">Choose a unique username for your store</div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" required>
+                    <div class="password-strength" id="passwordStrength"></div>
+                </div>
+                <div class="form-group" id="confPass">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" required>
+                </div>
+                <div class="form-group" id="whatsapp">
+                    <label for="whatsappNumber">WhatsApp Number</label>
+                    <input type="tel" id="whatsappNumber" class="form-control" required>
+                    <div class="input-hint">Include country code (e.g., +1234567890)</div>
+                </div>
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-primary" id="authBtn" value="Create Account" style="width: 100%;">
+                </div>
+            </form>
+            <div class="form-link" id="toggleText">
+                <p>Already have an account? <a href="#" id="togBtn">Log in</a></p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="verifySection" class="form-container" style="display:none" aria-labelledby="verifyTitle">
+        <h1 id="verifyTitle" class="form-title">Verify your email</h1>
+        <p class="small-muted" style="margin-bottom:12px">We sent a confirmation link to your email. Open it and click the link to activate your account.</p>
+
+        <div class="email-box" id="emailBox" aria-live="polite" style="margin-bottom:12px;">
+            <div>
+                <div class="small">Confirmation sent to</div>
+                <div id="emailText" style="font-weight:600"></div>
+            </div>
+            <div style="text-align:right">
+                <div class="small-muted" id="emailMasked"></div>
+            </div>
+        </div>
+
+        <div class="actions" style="margin-bottom:8px">
+            <button id="resendBtn" class="btn btn-secondary btn-small">Resend confirmation</button>
+            <button id="continueBtn" class="btn btn-primary btn-small">I clicked the link — Continue</button>
+        </div>
+
+        <div id="verifyMsg" class="message" style="display:none"></div>
+
+        <div class="small-muted" style="margin-top:12px;">
+            <a href="#" class="muted-link" id="toLogin2">Go to login</a>
+        </div>
+    </section>
+    </main>
+
+
+    <footer>
+        <div class="container">
+            <p>MarketPort - Simple portfolio marketplace for sellers</p>
+        </div>
+    </footer>
+    <script src="db.js"></script>
+    <script type="module" src="auth.js"></script>
+</body>
+</html>
