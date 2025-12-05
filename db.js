@@ -1,3 +1,8 @@
+
+
+
+
+
 // db.js – production-ready, friendly errors
 const SUPABASE_URL = 'https://xhblzickvkwcqueftcil.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhoYmx6aWNrdmt3Y3F1ZWZ0Y2lsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4NDExNTQsImV4cCI6MjA3OTQxNzE1NH0.tjmkzeFyhpSccrdBzl2nPxyEl28Lz1aLsLAfGDi7yFw';
@@ -5,7 +10,7 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 /* ------------------------------------------------------------------ */
 /* 1.  AUTHENTICATION                                                 */
-/* ------------------------------------------------------------------ */
+/* ------------------------------------------------------------------ 
 async function signUpSeller(req) {
   // 1.  duplicate username check
   const { data: existingUser } = await supabase
@@ -23,7 +28,6 @@ async function signUpSeller(req) {
     .maybeSingle();
   if (existingEmail) return { error: {message:'This e-mail is already registered. Try logging in instead.'} };
 
-  // 3.  create auth user
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email: req.email,
     password: req.password,
@@ -33,7 +37,6 @@ async function signUpSeller(req) {
 
   const uid = authData.user.id;
 
-  // 4.  create seller row
   const { data: sellerData, error: sellerError } = await supabase
     .from('sellers')
     .insert([{   id: uid, username: req.username, email: req.email, whatsapp_number: req.whatsappNumber }])
@@ -43,7 +46,7 @@ async function signUpSeller(req) {
 
   return { user: authData.user, seller: sellerData };
 }
-
+*/
 async function loginSeller(req) {
   const { data, error } = await supabase.auth.signInWithPassword({ email: req.email, password: req.password });
   if (error) return { error: {message: mapAuthError(error) }};
