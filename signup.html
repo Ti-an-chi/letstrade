@@ -19,7 +19,7 @@
     <main class="container">
     <section id="signupSection" class="form-container">
         <div class="form-container">
-            <h1 class="form-title">Create Seller Account</h1>
+            <h1 class="form-title">Create Account</h1>
         <div id="message" class="message" style="display: none;"></div>
             
             <form id="signupForm">
@@ -37,6 +37,16 @@
                     <input type="password" id="password" class="form-control" required>
                     <div class="password-strength" id="passwordStrength"></div>
                 </div>
+                <div class="form-group">
+                    <label for="productCategory">Role</label>
+                    <select id="productCategory" class="form-control" required>
+                        <option value="">Role</option>
+                        <option value="buyer">Other</option>
+                        <option value="seller">Other</option>
+                    </select>
+                    <div class="input-hint">you can later change this</div>
+                </div>
+
                 <div class="form-group" id="confPass">
                     <label for="confirmPassword">Confirm Password</label>
                     <input type="password" id="confirmPassword" class="form-control" required>
@@ -86,7 +96,7 @@
 
     <footer>
         <div class="container">
-            <p>MarketPort - Simple portfolio marketplace for sellers</p>
+            <p>ONTROPP - Simple portfolio marketplace for sellers</p>
         </div>
     </footer>
     <script src="db.js"></script>
