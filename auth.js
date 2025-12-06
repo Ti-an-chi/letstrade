@@ -91,8 +91,7 @@ signupForm.addEventListener('submit', async e => {
         email,
         password: pass,
         username: document.getElementById('username').value.trim(),
-        whatsapp_number: document.getElementById('whatsappNumber').value.trim(),
-        role: document.getElementById('role').value,
+        whatsappNumber: document.getElementById('whatsappNumber').value.trim()
       });
       if (r.error) { showMessage(r.error.message); return; }
       localStorage.setItem('pendingSignupEmail', email);
