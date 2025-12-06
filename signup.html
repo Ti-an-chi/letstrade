@@ -37,19 +37,18 @@
                     <input type="password" id="password" class="form-control" required>
                     <div class="password-strength" id="passwordStrength"></div>
                 </div>
-                <div class="form-group">
-                    <label for="productCategory">Role</label>
-                    <select id="productCategory" class="form-control" required>
-                        <option value="">Role</option>
-                        <option value="buyer">Other</option>
-                        <option value="seller">Other</option>
-                    </select>
-                    <div class="input-hint">you can later change this</div>
-                </div>
-
                 <div class="form-group" id="confPass">
                     <label for="confirmPassword">Confirm Password</label>
                     <input type="password" id="confirmPassword" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select id="role" class="form-control" required>
+                        <option value="">Role</option>
+                        <option value="buyer">buyer</option>
+                        <option value="seller">sell</option>
+                    </select>
+                    <div class="input-hint">you can change this later</div>
                 </div>
                 <div class="form-group" id="whatsapp">
                     <label for="whatsappNumber">WhatsApp Number</label>
@@ -57,7 +56,7 @@
                     <div class="input-hint">Include country code (e.g., +1234567890)</div>
                 </div>
                 <div class="form-actions">
-                    <input type="submit" class="btn btn-primary" id="authBtn" value="Create Account" style="width: 100%;">
+                    <input type="submit" class="btn btn-primary safe" id="authBtn" value="Create Account" style="width: 100%;">
                 </div>
             </form>
             <div class="form-link" id="toggleText">
@@ -68,11 +67,11 @@
     
     <section id="verifySection" class="form-container" style="display:none" aria-labelledby="verifyTitle">
         <h1 id="verifyTitle" class="form-title">Verify your email</h1>
-        <p class="small-muted" style="margin-bottom:12px">We sent a confirmation link to your email. Open it and click the link to activate your account.</p>
+        <p class="small-muted" style="margin-bottom:12px">check your email for OTP.</p>
 
         <div class="email-box" id="emailBox" aria-live="polite" style="margin-bottom:12px;">
             <div>
-                <div class="small">Confirmation sent to</div>
+                <div class="small">OTP sent to</div>
                 <div id="emailText" style="font-weight:600"></div>
             </div>
             <div style="text-align:right">
@@ -81,8 +80,8 @@
         </div>
 
         <div class="actions" style="margin-bottom:8px">
-            <button id="resendBtn" class="btn btn-secondary btn-small">Resend confirmation</button>
-            <button id="continueBtn" class="btn btn-primary btn-small">I clicked the link — Continue</button>
+            <input type="text">
+            <button id="resendBtn" class="btn btn-secondary btn-small">Resend OTP</button>
         </div>
 
         <div id="verifyMsg" class="message" style="display:none"></div>

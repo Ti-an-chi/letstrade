@@ -8,6 +8,7 @@
 :root {
     --primary: #3483E0;
     --secondary: #6B7280;
+    --new: #1AEF61;
     --background: #F9FAFB;
     --text: #1F2937;
     --success: #10B981;
@@ -262,6 +263,10 @@ header {
 .stat-label {
     font-size: 0.875rem;
     color: var(--secondary);
+}
+
+.safe {
+    background: var(--new);
 }
 
 /* Profile Header */
