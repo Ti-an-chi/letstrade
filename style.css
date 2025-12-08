@@ -7,7 +7,8 @@
 
 :root {
     --primary: #3483E0;
-    --secondary: #6B7280;
+    --secondary:#2ECC71;
+    --hash: #6B7280;
     --background: #F9FAFB;
     --text: #1F2937;
     --success: #10B981;
@@ -72,7 +73,7 @@ header {
     color: white;
 }
 
-.btn-secondary {
+.btn-hash {
     background-color: var(--white);
     color: var(--text);
     border: 1px solid var(--border);
@@ -119,9 +120,9 @@ header {
 }
 
 .chip.active {
-    background-color: var(--primary);
+    background-color: var(--secondary);
     color: white;
-    border-color: var(--primary);
+    border-color: var(--secondary);
 }
 
 .price-filter {
@@ -175,14 +176,14 @@ header {
 }
 
 .product-price {
-    color: var(--primary);
+    color: var(--secondary);
     font-weight: 600;
     margin-bottom: 4px;
 }
 
 .product-seller {
     font-size: 0.75rem;
-    color: var(--secondary);
+    color: var(--hash);
 }
 
 /* Form Styles */
@@ -223,6 +224,10 @@ header {
     margin-top: 24px;
 }
 
+form button[type="submit"] {
+  background: var(--secondary);
+}
+
 .form-link {
     text-align: center;
     margin-top: 16px;
@@ -261,7 +266,7 @@ header {
 
 .stat-label {
     font-size: 0.875rem;
-    color: var(--secondary);
+    color: var(--hash);
 }
 
 /* Profile Header */
@@ -280,7 +285,7 @@ header {
 }
 
 .profile-join-date {
-    color: var(--secondary);
+    color: var(--hash);
     font-size: 0.875rem;
 }
 
@@ -296,7 +301,7 @@ footer {
     margin-top: 40px;
     border-top: 1px solid var(--border);
     text-align: center;
-    color: var(--secondary);
+    color: var(--hash);
     font-size: 0.875rem;
 }
 
@@ -357,7 +362,7 @@ footer {
 /* Input Hints */
 .input-hint {
     font-size: 0.75rem;
-    color: var(--secondary);
+    color: var(--hash);
     margin-top: 4px;
 }
 
