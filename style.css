@@ -224,8 +224,54 @@ header {
     margin-top: 24px;
 }
 
-form button[type="submit"] {
+form button, input[type="submit"] {
   background: var(--secondary);
+} 
+
+.otp {
+  display: flex;
+  gap: 10px;
+  margin: 10px;
+}
+
+.otp input {
+  width: 45px;
+  height: 50px;
+  text-align: center;
+  font-size: 1.3rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.otp input:hover {
+  border-color: var(--primary);
+}
+
+.otp input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 4px var(--primary);
+}
+
+#verifyBtn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #ccc;
+  color: #fff;
+  font-size: 1rem;
+  transition: background .2s, transform .2s;
+}
+
+/* Activated state */
+#verifyBtn.active {
+  background: var(--secondary);
+  cursor: pointer;
+}
+
+#verifyBtn.active:hover {
+  transform: translateY(-1px);
 }
 
 .form-link {
