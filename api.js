@@ -3,11 +3,10 @@ const API = {
   baseURL: 'http://localhost:5000',
   
   // Store tokens & userId after login
-  setTokens({ accessToken, refreshToken, userId, user }) {
+  setTokens({ accessToken, refreshToken, userId, }) {
     localStorage.setItem('ontrop_token', accessToken);
     localStorage.setItem('ontrop_refresh', refreshToken);
     localStorage.setItem('ontrop_userid', userId);
-    if (user) localStorage.setItem('ontrop_user', JSON.stringify(user));
   },
   
   // Clear everything on logout
@@ -101,6 +100,11 @@ const API = {
     await this._fetch('/api/auth/logout', { method: 'POST' });
     this.clearTokens();
   },
+  
+  /* ---------- Load Data ---------- */
+  async getCurrentUser() {
+    return this._fetch('/api/user/me');
+  }, 
   
   /*---------- UTILS ----------*/
   async ping() {

@@ -49,17 +49,10 @@ let products = [
         image: "https://via.placeholder.com/200x200?text=Desk+Lamp"
     }
 ];
+let sellerProducts = [];
 
 // userSession.js
 let currentUser = null;
-
-export const UserSession = {
-    setCurrentUser: (user) => currentUser = user,
-    getCurrentUser: () => currentUser,
-    clearUser: () => currentUser = null,
-};
-
-let sellerProducts = [];
 
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -153,16 +146,12 @@ function filterByPrice(minPrice, maxPrice) {
 
 // Initialize Dashboard
 function initDashboard() {
-    // In a real app, this would come from user authentication
-    currentUser = {
-        name: "John Doe",
-        email: "john@example.com"
-    };
+   currentUser = window.API.getCurrentUser();
     
-    document.getElementById('sellerName').textContent = currentUser.name;
-    
+    document.getElementById('sellerName').textContent = currentUser.username;
+            
     // Load seller's products
-    sellerProducts = products.filter(product => product.seller === currentUser.name);
+    sellerProducts = products.filter(product => product.seller === currentUser.username);
     document.getElementById('totalProducts').textContent = sellerProducts.length;
     document.getElementById('profileViews').textContent = Math.floor(Math.random() * 100);
     
@@ -198,7 +187,7 @@ function displaySellerProducts() {
 function initProfile() {
     // Get seller name from URL or use default
     const urlParams = new URLSearchParams(window.location.search);
-    const sellerName = urlParams.get('seller') || 'TechDeals';
+    const sellerName = urlParams.get('user') || currentUser.username;
     
     document.getElementById('profileSellerName').textContent = sellerName;
     
@@ -259,7 +248,7 @@ function setupForms() {
     
     if (window.location.pathname.includes('dashboard.html') || 
         window.location.pathname.includes('upload.html')) {
-        const isLoggedIn = window.db.isLoggedIn();
+        const isLoggedIn = localStorage.getItem('ontrop_token');
         if (!isLoggedIn) {
             window.location.href = 'signup.html';
         }

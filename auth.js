@@ -1,6 +1,3 @@
-/*  auth.js  – OTP-based auth flow that matches api.js  */
-import { UserSession } from './script.js';
-
 const $ = id => document.getElementById(id);
 
 /* ----------  DOM & State  ---------- */
@@ -17,8 +14,13 @@ const emailMasked     = $('emailMasked');
 const passwordInput   = $('password');
 const passwordStrengthEl = $('passwordStrength');
 
-let mode = 'signup';
+let mode = 'signin';
 let pendingEmail = null;
+document.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('mod');
+    if (saved) mode = saved;
+    toggleMode();
+});
 
 /* ----------  Helpers  ---------- */
 function showMessage(txt, type = 'error', target = 'form') {
@@ -89,6 +91,7 @@ function toggleMode(e) {
     
     document.getElementById('togBtn').onclick = toggleMode;
     hideMessage();
+    localStorage.setItem('mod', mode);
 }
 
 /* ----------  Form Validation  ---------- */
@@ -176,8 +179,7 @@ signupForm.addEventListener('submit', async e => {
             if (!response.ok) throw new Error(response.message || 'Login failed');
             
             window.API.setTokens(response);
-            UserSession.setCurrentUser(response.user);
-            location.href = 'dashboard.html';
+            location.href = 'psudo.html';
         }
     } catch (err) {
         showMessage(err.message);
