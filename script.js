@@ -145,17 +145,26 @@ function filterByPrice(minPrice, maxPrice) {
 }
 
 // Initialize Dashboard
-function initDashboard() {
-   currentUser = window.API.getCurrentUser();
+async function initDashboard() {
+   const response = await API.getCurrentUser();
+   if (response.ok) {
+       document.getElementById('user-name').textContent = response.user.username;
+       document.getElementById('user-email'). textContent = response.user.email;
+       
+   }
     
-    document.getElementById('sellerName').textContent = currentUser.username;
-            
     // Load seller's products
-    sellerProducts = products.filter(product => product.seller === currentUser.username);
-    document.getElementById('totalProducts').textContent = sellerProducts.length;
-    document.getElementById('profileViews').textContent = Math.floor(Math.random() * 100);
-    
-    displaySellerProducts();
+    if ( response.user.role === 'seller') { 
+        console.log("I'm a seller")
+        
+        sellerProducts = await api.getMyProducts();
+        document.getElementById('sellerBoard').style.display = 'block';
+        document.getElementById('totalProducts').textContent = sellerProducts.length;
+        document.getElementById('profileViews').textContent = Math.floor(Math.random() * 100);
+        displaySellerProducts();
+    } else if (response.user.role === 'user') {
+        console.log("I'm a normal user")
+    }
 }
 
 // Display seller's products in dashboard

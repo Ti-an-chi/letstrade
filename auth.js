@@ -179,7 +179,7 @@ signupForm.addEventListener('submit', async e => {
             if (!response.ok) throw new Error(response.message || 'Login failed');
             
             window.API.setTokens(response);
-            location.href = 'psudo.html';
+            location.href = 'dashboard.html';
         }
     } catch (err) {
         showMessage(err.message);

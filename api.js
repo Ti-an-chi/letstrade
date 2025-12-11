@@ -105,6 +105,9 @@ const API = {
   async getCurrentUser() {
     return this._fetch('/api/user/me');
   }, 
+  async getMyProducts() {
+    return this._fetch('api/products/mine');
+  },
   
   /*---------- UTILS ----------*/
   async ping() {
