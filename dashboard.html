@@ -4,288 +4,728 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ONTROPP - Dashboard</title>
-  <link rel="stylesheet" href="./css/dashboard.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/explore.css">
+  <link rel="stylesheet" href="/css/favourite.css">
+  <link rel="stylesheet" href="/css/profile.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+
+/* Add success/confirmation styles */
+  .success-message {
+    background-color: rgba(46, 204, 113, 0.1);
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+.success-message i {
+  font-size: 16px;
+}
+
+/* Add trust indicators for products */
+.trust-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--secondary);
+  margin-top: 4px;
+}
+
+.trust-indicator i {
+  font-size: 10px;
+}
+
+/* Add safety rating stars */
+.safety-rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.safety-rating i {
+  color: var(--secondary);
+  font-size: 12px;
+}
+
+/* Update loading spinner */
+.loading-spinner {
+  border-top-color: var(--secondary);
+}
+
+/* Add secure checkout/payment indicators */
+.secure-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background-color: rgba(46, 204, 113, 0.1);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--secondary);
+}
+
+/* Add to product cards in explore */
+.product-safety-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.safe-delivery {
+  color: var(--secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.safe-delivery i {
+  font-size: 10px;
+}
+  </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="dashboard-header">
-    <div class="header-container">
-      <div class="logo">ONTROPP</div>
-      <div class="header-actions">
-        <button class="icon-btn notification-btn" aria-label="Notifications">
-          <i class="fas fa-bell"></i>
-        </button>
-        <button class="icon-btn cart-btn" aria-label="Cart">
-          <i class="fas fa-shopping-cart"></i>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main class="dashboard-main">
-    <!-- User Welcome Section -->
-    <section class="user-welcome-section">
-      <div class="user-welcome">
-        <div class="user-avatar">
-          <img src="" alt="Profile" id="user-avatar-img" onerror="this.src='https://ui-avatars.com/api/?name=User&background=3483E0&color=fff'">
-        </div>
-        <div class="user-info">
-          <h2 class="welcome-text">Welcome back, <span id="user-name">User</span>!</h2>
-            <p class="user-email" id="user-email">someone@example.com</p>
+  <!-- All content lives here, tabs are toggled via CSS/JS -->
+  <div class="app-container">
+    <!-- Header - Always visible -->
+    <header class="dashboard-header">
+      <div class="header-container">
+        <div class="logo">ONTROPP</div>
+        <div class="header-actions">
+          <button class="icon-btn notification-btn" aria-label="Notifications">
+            <i class="fas fa-bell"></i>
+          </button>
+          <button class="icon-btn cart-btn" aria-label="Cart">
+            <i class="fas fa-shopping-cart"></i>
+          </button>
         </div>
       </div>
-    </section>
-    <section class="seller-board" style="display: block;">
-      <div class="section-header">
-        <h2 class="section-title">Seller Dashboard</h2>
-        <button class="add-product-btn">
-          <i class="fas fa-plus"></i>
-          Add Product
-        </button>
-      </div>
+    </header>
 
-      <!-- Seller Stats -->
-      <div class="seller-stats">
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-eye"></i>
+    <!-- Home Tab Content (Default active) -->
+    <main class="tab-content active" id="tab-home">
+      <!-- User Welcome Section -->
+      <section class="user-welcome-section">
+        <div class="user-welcome">
+          <div class="user-avatar">
+            <img src="" alt="Profile" id="user-avatar-img" onerror="this.src='https://ui-avatars.com/api/?name=User&background=3483E0&color=fff'">
           </div>
-          <div class="stat-details">
-            <h3 class="stat-title">Profile Views</h3>
-            <p class="stat-value" id="profile-views">0</p>
+          <div class="user-info">
+            <h2 class="welcome-text">Welcome back, <span id="user-name">User</span>!</h2>
+            <p class="user-email" id="user-email">user@example.com</p>
           </div>
         </div>
+      </section>
 
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-shopping-bag"></i>
-          </div>
-          <div class="stat-details">
-            <h3 class="stat-title">Total Orders</h3>
-            <p class="stat-value" id="total-orders">0</p>
-          </div>
+      <!-- Top Banner -->
+      <section class="banner-section">
+        <div class="banner-content">
+          <h1 class="banner-title">DISCOVER THE BEST SELLERS ON ONTROPP</h1>
         </div>
-      </div>
+      </section>
 
-      <!-- Seller Products Grid -->
-      <div class="seller-products-section">
+      <!-- Search Bar -->
+      <section class="search-section">
+        <div class="search-container">
+          <a href="#" class="search-bar" id="search-bar-link">
+            <i class="fas fa-search"></i>
+            <span class="search-placeholder">Search products, brands or categories</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Categories Section -->
+      <section class="categories-section">
         <div class="section-header">
-          <h3 class="section-subtitle">Your Products</h3>
+          <h2 class="section-title">Browse Categories</h2>
         </div>
-        <div class="products-grid">
-          <!-- Seller products will be loaded from server -->
+        <div class="categories-list">
+          <a href="#" class="category-card" data-category="electronics">
+            <div class="category-info">
+              <div class="category-icon">
+                <i class="fas fa-mobile-alt"></i>
+              </div>
+              <div class="category-details">
+                <h3 class="category-title">Electronics</h3>
+                <p class="category-count">0 products</p>
+              </div>
+            </div>
+            <div class="category-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="category-card" data-category="clothing">
+            <div class="category-info">
+              <div class="category-icon">
+                <i class="fas fa-tshirt"></i>
+              </div>
+              <div class="category-details">
+                <h3 class="category-title">Clothing</h3>
+                <p class="category-count">0 products</p>
+              </div>
+            </div>
+            <div class="category-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="category-card" data-category="home">
+            <div class="category-info">
+              <div class="category-icon">
+                <i class="fas fa-home"></i>
+              </div>
+              <div class="category-details">
+                <h3 class="category-title">Home & Garden</h3>
+                <p class="category-count">0 products</p>
+              </div>
+            </div>
+            <div class="category-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="category-card" data-category="beauty">
+            <div class="category-info">
+              <div class="category-icon">
+                <i class="fas fa-spa"></i>
+              </div>
+              <div class="category-details">
+                <h3 class="category-title">Beauty</h3>
+                <p class="category-count">0 products</p>
+              </div>
+            </div>
+            <div class="category-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="category-card" data-category="other">
+            <div class="category-info">
+              <div class="category-icon">
+                <i class="fas fa-box"></i>
+              </div>
+              <div class="category-details">
+                <h3 class="category-title">Other</h3>
+                <p class="category-count">0 products</p>
+              </div>
+            </div>
+            <div class="category-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </a>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Top Banner -->
-    <section class="banner-section">
-      <div class="banner-content">
-        <h1 class="banner-title">DISCOVER THE BEST SELLERS ON ONTROPP</h1>
-      </div>
-    </section>
-
-    <!-- Search Bar -->
-    <section class="search-section">
-      <div class="search-container">
-        <a href="#tab-explore" class="search-bar">
-          <i class="fas fa-search"></i>
-          <span class="search-placeholder">Search products, brands or categories</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- Categories Section -->
-    <section class="categories-section">
-      <div class="section-header">
-        <h2 class="section-title">Browse Categories</h2>
-      </div>
-      <div class="categories-list">
-        <a href="#" class="category-card" data-category="electronics">
-          <div class="category-info">
-            <div class="category-icon">
-              <i class="fas fa-mobile-alt"></i>
-            </div>
-            <div class="category-details">
-              <h3 class="category-title">Electronics</h3>
-              <p class="category-count">0 products</p>
-            </div>
-          </div>
-          <div class="category-arrow">
-            <i class="fas fa-chevron-right"></i>
-          </div>
-        </a>
-
-        <a href="#" class="category-card" data-category="clothing">
-          <div class="category-info">
-            <div class="category-icon">
-              <i class="fas fa-tshirt"></i>
-            </div>
-            <div class="category-details">
-              <h3 class="category-title">Clothing</h3>
-              <p class="category-count">0 products</p>
-            </div>
-          </div>
-          <div class="category-arrow">
-            <i class="fas fa-chevron-right"></i>
-          </div>
-        </a>
-
-        <a href="#" class="category-card" data-category="home">
-          <div class="category-info">
-            <div class="category-icon">
-              <i class="fas fa-home"></i>
-            </div>
-            <div class="category-details">
-              <h3 class="category-title">Home & Garden</h3>
-              <p class="category-count">0 products</p>
-            </div>
-          </div>
-          <div class="category-arrow">
-            <i class="fas fa-chevron-right"></i>
-          </div>
-        </a>
-
-        <a href="#" class="category-card" data-category="beauty">
-          <div class="category-info">
-            <div class="category-icon">
-              <i class="fas fa-spa"></i>
-            </div>
-            <div class="category-details">
-              <h3 class="category-title">Beauty</h3>
-              <p class="category-count">0 products</p>
-            </div>
-          </div>
-          <div class="category-arrow">
-            <i class="fas fa-chevron-right"></i>
-          </div>
-        </a>
-
-        <a href="#" class="category-card" data-category="other">
-          <div class="category-info">
-            <div class="category-icon">
-              <i class="fas fa-box"></i>
-            </div>
-            <div class="category-details">
-              <h3 class="category-title">Other</h3>
-              <p class="category-count">0 products</p>
-            </div>
-          </div>
-          <div class="category-arrow">
-            <i class="fas fa-chevron-right"></i>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <!-- Recommended Section -->
-    <section class="recommended-section">
-      <div class="section-header">
-        <h2 class="section-title">Recommended For You</h2>
-      </div>
-      
-      <div class="recommended-container">
-        <div class="recommended-list">
-          <!-- Recommended items will be loaded from server -->
+      <!-- Recommended Section -->
+      <section class="recommended-section">
+        <div class="section-header">
+          <h2 class="section-title">Recommended For You</h2>
         </div>
-      </div>
-      
-      <!-- Empty state (for new users) -->
-      <div class="empty-recommendations">
-        <p>Start exploring products to see recommendations here.</p>
-      </div>
-    </section>
-
-    <!-- Templates (hidden) -->
-    <template id="category-template">
-      <a href="#" class="category-card">
-        <div class="category-info">
-          <div class="category-icon">
-            <i class="fas fa-box"></i>
-          </div>
-          <div class="category-details">
-            <h3 class="category-title">Category Name</h3>
-            <p class="category-count">0 products</p>
+        
+        <div class="recommended-container">
+          <div class="recommended-list" id="recommended-list">
+            <!-- Recommended items will be loaded from server -->
           </div>
         </div>
-        <div class="category-arrow">
-          <i class="fas fa-chevron-right"></i>
+        
+        <!-- Empty state (for new users) -->
+        <div class="empty-recommendations" id="empty-recommendations">
+          <p>Start exploring products to see recommendations here.</p>
         </div>
-      </a>
-    </template>
+      </section>
 
-    <template id="recommended-template">
-      <a href="#" class="recommended-item">
-        <div class="item-image">
-          <i class="fas fa-box"></i>
+      <!-- Seller Board (Hidden by default) -->
+      <section class="seller-board" id="seller-board" style="display: none;">
+        <div class="section-header">
+          <h2 class="section-title">Seller Dashboard</h2>
+          <button class="add-product-btn" id="add-product-btn">
+            <i class="fas fa-plus"></i>
+            Add Product
+          </button>
         </div>
-        <div class="item-details">
-          <h3 class="item-title">Product Name</h3>
-          <p class="item-price">$0.00</p>
-        </div>
-      </a>
-    </template>
 
-    <template id="seller-product-template">
-      <div class="product-card">
-        <div class="product-image">
-          <i class="fas fa-box"></i>
-        </div>
-        <div class="product-details">
-          <h3 class="product-title">Product Name</h3>
-          <p class="product-price">$0.00</p>
-          <div class="product-actions">
-            <button class="action-btn edit-btn">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="action-btn delete-btn">
-              <i class="fas fa-trash"></i>
-            </button>
+        <!-- Seller Stats -->
+        <div class="seller-stats">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-eye"></i>
+            </div>
+            <div class="stat-details">
+              <h3 class="stat-title">Profile Views</h3>
+              <p class="stat-value" id="profile-views">0</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-shopping-bag"></i>
+            </div>
+            <div class="stat-details">
+              <h3 class="stat-title">Total Orders</h3>
+              <p class="stat-value" id="total-orders">0</p>
+            </div>
           </div>
         </div>
-      </div>
-    </template>
-  </main>
 
-  <!-- Footer -->
-  <footer class="dashboard-footer">
-    <div class="footer-content">
-      <p class="footer-text">© 2023 ONTROPP. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="#" class="footer-link">Terms</a>
-        <a href="#" class="footer-link">Privacy</a>
-        <a href="#" class="footer-link">Help</a>
+        <!-- Seller Products Grid -->
+        <div class="seller-products-section">
+          <div class="section-header">
+            <h3 class="section-subtitle">Your Products</h3>
+          </div>
+          <div class="products-grid" id="seller-products-grid">
+            <!-- Seller products will be loaded from server -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+<!-- Explore Tab Content -->
+<main class="tab-content" id="tab-explore">
+  <!-- Search Bar (at top for explore) -->
+  <section class="search-section explore-search">
+    <div class="search-container">
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" id="explore-search-input" placeholder="Search products, brands, or sellers...">
       </div>
     </div>
-  </footer>
+  </section>
 
-  <!-- Bottom Navigation Tabs -->
-  <nav class="bottom-nav">
-    <div class="nav-container">
-      <a href="#tab-home" class="nav-item active" id="tab-home">
-        <i class="fas fa-home"></i>
-        <span class="nav-label">Home</span>
-      </a>
-      <a href="#tab-explore" class="nav-item" id="tab-explore">
-        <i class="fas fa-compass"></i>
-        <span class="nav-label">Explore</span>
-      </a>
-      <a href="#tab-fav" class="nav-item" id="tab-fav">
+  <!-- Filter Section -->
+  <section class="filter-section">
+    <div class="filter-chips">
+      <button class="chip active" data-category="all">All</button>
+      <button class="chip" data-category="electronics">Electronics</button>
+      <button class="chip" data-category="clothing">Clothing</button>
+      <button class="chip" data-category="home">Home & Garden</button>
+      <button class="chip" data-category="beauty">Beauty</button>
+      <button class="chip" data-category="other">Others</button>
+    </div>
+    
+    <div class="price-filter">
+      <input type="number" id="min-price" placeholder="Min price" min="0">
+      <span class="price-separator">to</span>
+      <input type="number" id="max-price" placeholder="Max price" min="0">
+      <button class="filter-apply-btn" id="apply-price-filter">Apply</button>
+    </div>
+  </section>
+
+  <!-- Products Grid -->
+  <section class="explore-products-section">
+    <div class="section-header">
+      <h2 class="section-title">Discover Products</h2>
+      <div class="results-count" id="results-count">0 products</div>
+    </div>
+    
+    <div class="products-grid" id="explore-product-grid">
+      <!-- Products will be loaded here -->
+    </div>
+    
+    <!-- Loading and empty states -->
+    <div class="loading-products" id="loading-products">
+      <div class="loading-spinner"></div>
+      <p>Loading products...</p>
+    </div>
+    
+    <div class="empty-products" id="empty-products" style="display: none;">
+      <i class="fas fa-search"></i>
+      <h3>No products found</h3>
+      <p>Try adjusting your search or filters</p>
+    </div>
+  </section>
+</main>
+
+<!-- Favourites Tab Content -->
+<main class="tab-content" id="tab-fav">
+  <!-- Favourites Header -->
+  <section class="favourites-header-section">
+    <div class="favourites-header-content">
+      <div class="favourites-icon">
         <i class="fas fa-heart"></i>
-        <span class="nav-label">Favourites</span>
-      </a>
-      <a href="#tab-profile" class="nav-item" id="tab-profile">
-        <i class="fas fa-user"></i>
-        <span class="nav-label">Profile</span>
+      </div>
+      <div class="favourites-info">
+        <h2 class="favourites-title">Your Favourites</h2>
+        <p class="favourites-subtitle" id="favourites-count">0 items saved</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Options -->
+  <section class="favourites-filter-section">
+    <div class="filter-options">
+      <button class="filter-option active" data-filter="all">All Items</button>
+      <button class="filter-option" data-filter="available">Available</button>
+      <button class="filter-option" data-filter="sold">Out of Stock</button>
+    </div>
+    
+    <div class="sort-options">
+      <select id="favourites-sort" class="sort-select">
+        <option value="recent">Recently Added</option>
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+        <option value="name">Name: A to Z</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Favourites Grid -->
+  <section class="favourites-grid-section">
+    <div class="favourites-grid" id="favourites-grid">
+      <!-- Favourite items will be loaded here -->
+    </div>
+    
+    <!-- Empty State -->
+    <div class="empty-favourites" id="empty-favourites">
+      <div class="empty-icon">
+        <i class="fas fa-heart"></i>
+      </div>
+      <h3>No favourites yet</h3>
+      <p>Tap the heart icon on any product to save it here</p>
+      <a href="#tab-explore" class="btn-secondary explore-btn">
+        <i class="fas fa-compass"></i> Explore Products
       </a>
     </div>
-  </nav>
+    
+    <!-- Loading State -->
+    <div class="loading-favourites" id="loading-favourites">
+      <div class="loading-spinner"></div>
+      <p>Loading your favourites...</p>
+    </div>
+  </section>
 
-  <!-- Empty tabs (hidden by default) -->
-  <div id="tab-explore" style="display: none;"></div>
-  <div id="tab-fav" style="display: none;"></div>
-  <div id="tab-profile" style="display: none;"></div>
+  <!-- Quick Actions -->
+  <section class="favourites-actions" id="favourites-actions" style="display: none;">
+    <div class="action-buttons">
+      <button class="action-btn bulk-remove-btn" id="bulk-remove-btn">
+        <i class="fas fa-trash"></i> Remove Selected
+      </button>
+      <button class="action-btn clear-all-btn" id="clear-all-btn">
+        <i class="fas fa-ban"></i> Clear All
+      </button>
+    </div>
+  </section>
+</main>
+
+    <!-- Profile Tab Content -->
+<main class="tab-content" id="tab-profile">
+  <!-- Profile Header -->
+  <section class="profile-header-section">
+    <div class="profile-header-content">
+      <div class="profile-avatar-large">
+        <img src="" alt="Profile" id="profile-avatar-img" onerror="this.src='https://ui-avatars.com/api/?name=User&background=3483E0&color=fff'">
+        <button class="edit-avatar-btn" id="edit-avatar-btn">
+          <i class="fas fa-camera"></i>
+        </button>
+      </div>
+      
+      <div class="profile-info">
+        <div class="profile-name-section">
+          <h2 id="profile-display-name">Your Name</h2>
+          <button class="edit-profile-btn" id="edit-profile-btn">
+            <i class="fas fa-edit"></i> Edit
+          </button>
+        </div>
+        
+        <p class="profile-email" id="profile-display-email">email@example.com</p>
+        <p class="profile-role" id="profile-role">Buyer</p>
+        
+        <!-- Buyer Stats -->
+        <div class="buyer-stats" id="buyer-stats">
+          <div class="stat-item">
+            <span class="stat-value" id="orders-count">0</span>
+            <span class="stat-label">Orders</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="cart-count">0</span>
+            <span class="stat-label">In Cart</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="favorites-count">0</span>
+            <span class="stat-label">Favorites</span>
+          </div>
+        </div>
+        
+        <!-- Seller Profile Link (for sellers) -->
+        <div class="seller-profile-link" id="seller-profile-link" style="display: none;">
+          <div class="profile-link-box">
+            <i class="fas fa-link"></i>
+            <div class="link-info">
+              <span class="link-label">Your Profile Link</span>
+              <span class="link-url" id="profile-link-url">ontropp.com/seller/username</span>
+            </div>
+            <button class="copy-link-btn" id="copy-link-btn">
+              <i class="fas fa-copy"></i> Copy
+            </button>
+          </div>
+        </div>
+        
+        <!-- Become Seller Button (for buyers) -->
+        <button class="become-seller-btn" id="become-seller-btn">
+          <i class="fas fa-store"></i> Become a Seller
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seller Dashboard Section (only for sellers) -->
+  <section class="profile-seller-dashboard" id="profile-seller-dashboard" style="display: none;">
+    <div class="section-header">
+      <h2 class="section-title">Seller Dashboard</h2>
+      <button class="add-product-btn">
+        <i class="fas fa-plus"></i> Add Product
+      </button>
+    </div>
+    
+    <div class="seller-quick-stats">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-eye"></i>
+        </div>
+        <div class="stat-details">
+          <h3 class="stat-title">Profile Views</h3>
+          <p class="stat-value" id="seller-profile-views">0</p>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-shopping-bag"></i>
+        </div>
+        <div class="stat-details">
+          <h3 class="stat-title">Total Orders</h3>
+          <p class="stat-value" id="seller-total-orders">0</p>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <div class="stat-details">
+          <h3 class="stat-title">Rating</h3>
+          <p class="stat-value" id="seller-rating">4.8</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Seller's Products -->
+    <div class="profile-products-section">
+      <div class="section-header">
+        <h3 class="section-subtitle">Your Products</h3>
+        <a href="#" class="see-all">View All</a>
+      </div>
+      <div class="products-grid" id="profile-seller-products">
+        <!-- Seller's products will be loaded here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Buyer Section -->
+  <section class="profile-buyer-section" id="profile-buyer-section">
+    <!-- Recent Orders -->
+    <div class="profile-section">
+      <div class="section-header">
+        <h3 class="section-subtitle">Recent Orders</h3>
+        <a href="#" class="see-all">View All</a>
+      </div>
+      <div class="orders-list" id="recent-orders">
+        <div class="empty-state">
+          <i class="fas fa-shopping-bag"></i>
+          <p>No orders yet</p>
+          <a href="#tab-explore" class="btn-secondary">Start Shopping</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Favorites -->
+    <div class="profile-section">
+      <div class="section-header">
+        <h3 class="section-subtitle">Your Favorites</h3>
+        <a href="#tab-fav" class="see-all">View All</a>
+      </div>
+      <div class="favorites-grid" id="favorites-grid">
+        <!-- Favorites will be loaded here -->
+      </div>
+    </div>
+    
+    <!-- Settings -->
+    <div class="profile-section">
+      <div class="section-header">
+        <h3 class="section-subtitle">Account Settings</h3>
+      </div>
+      <div class="settings-list">
+        <a href="#" class="settings-item">
+          <i class="fas fa-user-cog"></i>
+          <span>Personal Information</span>
+          <i class="fas fa-chevron-right"></i>
+        </a>
+        <a href="#" class="settings-item">
+          <i class="fas fa-shield-alt"></i>
+          <span>Privacy & Security</span>
+          <i class="fas fa-chevron-right"></i>
+        </a>
+        <a href="#" class="settings-item">
+          <i class="fas fa-bell"></i>
+          <span>Notifications</span>
+          <i class="fas fa-chevron-right"></i>
+        </a>
+        <a href="#" class="settings-item">
+          <i class="fas fa-question-circle"></i>
+          <span>Help & Support</span>
+          <i class="fas fa-chevron-right"></i>
+        </a>
+        <a href="#" class="settings-item logout-item">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Log Out</span>
+          <i class="fas fa-chevron-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Viewing Other Seller's Profile (hidden by default) -->
+  <section class="other-seller-profile" id="other-seller-profile" style="display: none;">
+    <div class="profile-header-content">
+      <div class="profile-avatar-large">
+        <img src="" alt="Seller Profile" id="other-seller-avatar">
+      </div>
+      
+      <div class="profile-info">
+        <div class="profile-name-section">
+          <h2 id="other-seller-name">Seller Name</h2>
+          <span class="verified-badge">
+            <i class="fas fa-check-circle"></i> Verified Seller
+          </span>
+        </div>
+        
+        <p class="profile-join-date" id="other-seller-join-date">Joined January 2024</p>
+        <p class="profile-bio" id="other-seller-bio">This seller hasn't added a bio yet.</p>
+        
+        <div class="seller-contact-actions">
+          <button class="contact-seller-btn">
+            <i class="fas fa-envelope"></i> Contact Seller
+          </button>
+          <button class="follow-seller-btn">
+            <i class="fas fa-user-plus"></i> Follow
+          </button>
+        </div>
+        
+        <div class="seller-public-stats">
+          <div class="stat-item">
+            <span class="stat-value" id="other-seller-products">0</span>
+            <span class="stat-label">Products</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="other-seller-followers">0</span>
+            <span class="stat-label">Followers</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="other-seller-rating">0.0</span>
+            <span class="stat-label">Rating</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Other Seller's Products -->
+    <div class="profile-products-section">
+      <div class="section-header">
+        <h3 class="section-subtitle">Products by this Seller</h3>
+      </div>
+      <div class="products-grid" id="other-seller-products-grid">
+        <!-- Other seller's products will be loaded here -->
+      </div>
+    </div>
+    
+    <button class="back-to-profile-btn" id="back-to-profile-btn">
+      <i class="fas fa-arrow-left"></i> Back to My Profile
+    </button>
+  </section>
+</main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+      <div class="footer-content">
+        <p class="footer-text">© 2025 ONTROPP. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Terms</a>
+          <a href="#" class="footer-link">Privacy</a>
+          <a href="#" class="footer-link">Help</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bottom Navigation Tabs -->
+    <nav class="bottom-nav">
+      <div class="nav-container">
+        <a href="#" class="nav-item active" data-tab="tab-home">
+          <i class="fas fa-home"></i>
+          <span class="nav-label">Home</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="tab-explore">
+          <i class="fas fa-compass"></i>
+          <span class="nav-label">Explore</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="tab-fav">
+          <i class="fas fa-heart"></i>
+          <span class="nav-label">Favourites</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="tab-profile">
+          <i class="fas fa-user"></i>
+          <span class="nav-label">Profile</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Templates (hidden) -->
+  <template id="recommended-template">
+    <a href="#" class="recommended-item">
+      <div class="item-image">
+        <img src="" alt="Product" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\"fas fa-box\"></i>';">
+      </div>
+      <div class="item-details">
+        <h3 class="item-title">Product Name</h3>
+        <p class="item-price">₦0.00</p>
+      </div>
+    </a>
+  </template>
+
+  <template id="seller-product-template">
+    <div class="product-card">
+      <div class="product-image">
+        <i class="fas fa-box"></i>
+      </div>
+      <div class="product-details">
+        <h3 class="product-title">Product Name</h3>
+        <p class="product-price">₦0.00</p>
+        <div class="product-actions">
+          <button class="action-btn edit-btn">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="action-btn delete-btn">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- JavaScript -->
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/explore.js" ></script>
+  <script src="/js/favourite.js"></script>
+  <script src="/js/profile.js"></script>
 </body>
 </html>
