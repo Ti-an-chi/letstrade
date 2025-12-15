@@ -638,3 +638,103 @@ body {
   font-size: 10px;
 }
 
+/* Loading state for recommended */
+.loading-recommended {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  color: var(--hash);
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-top: 16px;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--secondary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Update empty states */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  color: var(--hash);
+  text-align: center;
+}
+
+.empty-state i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: var(--border);
+}
+
+/* Seller-focused product cards */
+.product-seller-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.seller-avatar-small {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--primary);
+}
+
+.seller-details {
+  flex: 1;
+}
+
+.seller-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.seller-rating {
+  font-size: 11px;
+  color: var(--hash);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.seller-rating i {
+  color: #fbbf24; /* Gold/yellow for stars */
+  font-size: 10px;
+}
+
+/* Adjust product title */
+.explore-product-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  color: var(--hash); /* Make product name less prominent */
+}

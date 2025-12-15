@@ -126,6 +126,50 @@
           </div>
         </div>
       </section>
+      <!----- Seller Board (Hidden by default) ---->
+      <section class="seller-board" id="seller-board" style="display: block;">
+        <div class="section-header">
+          <h2 class="section-title">Seller Dashboard</h2>
+          <button class="add-product-btn" id="add-product-btn">
+            <i class="fas fa-plus"></i>
+            Add Product
+          </button>
+        </div>
+
+        <!-- Seller Stats -->
+        <div class="seller-stats">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-eye"></i>
+            </div>
+            <div class="stat-details">
+              <h3 class="stat-title">Profile Views</h3>
+              <p class="stat-value" id="profile-views">0</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-shopping-bag"></i>
+            </div>
+            <div class="stat-details">
+              <h3 class="stat-title">Total Orders</h3>
+              <p class="stat-value" id="total-orders">0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seller Products Grid -->
+        <div class="seller-products-section">
+          <div class="section-header">
+            <h3 class="section-subtitle">Your Products</h3>
+          </div>
+          <div class="products-grid" id="seller-products-grid">
+            <!-- Seller products will be loaded from server -->
+          </div>
+        </div>
+      </section>
+
 
       <!-- Top Banner -->
       <section class="banner-section">
@@ -139,7 +183,7 @@
         <div class="search-container">
           <a href="#" class="search-bar" id="search-bar-link">
             <i class="fas fa-search"></i>
-            <span class="search-placeholder">Search products, brands or categories</span>
+            <span class="search-placeholder">Search sellers, products or services</span>
           </a>
         </div>
       </section>
@@ -244,82 +288,64 @@
           <p>Start exploring products to see recommendations here.</p>
         </div>
       </section>
-
-      <!-- Seller Board (Hidden by default) -->
-      <section class="seller-board" id="seller-board" style="display: none;">
-        <div class="section-header">
-          <h2 class="section-title">Seller Dashboard</h2>
-          <button class="add-product-btn" id="add-product-btn">
-            <i class="fas fa-plus"></i>
-            Add Product
-          </button>
-        </div>
-
-        <!-- Seller Stats -->
-        <div class="seller-stats">
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="fas fa-eye"></i>
-            </div>
-            <div class="stat-details">
-              <h3 class="stat-title">Profile Views</h3>
-              <p class="stat-value" id="profile-views">0</p>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="fas fa-shopping-bag"></i>
-            </div>
-            <div class="stat-details">
-              <h3 class="stat-title">Total Orders</h3>
-              <p class="stat-value" id="total-orders">0</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Seller Products Grid -->
-        <div class="seller-products-section">
-          <div class="section-header">
-            <h3 class="section-subtitle">Your Products</h3>
-          </div>
-          <div class="products-grid" id="seller-products-grid">
-            <!-- Seller products will be loaded from server -->
-          </div>
-        </div>
-      </section>
+      <!-- Loading state for recommended -->
+      <div class="loading-recommended" id="loading-recommended" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Loading recommendations...</p>
+</div>
     </main>
 
 <!-- Explore Tab Content -->
 <main class="tab-content" id="tab-explore">
-  <!-- Search Bar (at top for explore) -->
-  <section class="search-section explore-search">
-    <div class="search-container">
-      <div class="search-bar">
+  <!-- Sticky Search & Filter Bar -->
+  <div class="sticky-search-filter" id="sticky-search-filter">
+    <div class="search-filter-container">
+      <!-- Search Bar -->
+      <div class="sticky-search-bar">
         <i class="fas fa-search"></i>
-        <input type="text" id="explore-search-input" placeholder="Search products, brands, or sellers...">
+        <input type="text" id="explore-search-input" placeholder="Search products..." autocomplete="off">
       </div>
-    </div>
-  </section>
-
-  <!-- Filter Section -->
-  <section class="filter-section">
-    <div class="filter-chips">
-      <button class="chip active" data-category="all">All</button>
-      <button class="chip" data-category="electronics">Electronics</button>
-      <button class="chip" data-category="clothing">Clothing</button>
-      <button class="chip" data-category="home">Home & Garden</button>
-      <button class="chip" data-category="beauty">Beauty</button>
-      <button class="chip" data-category="other">Others</button>
+      
+      <!-- Filter Toggle Button -->
+      <button class="filter-toggle-btn" id="filter-toggle-btn">
+        <i class="fas fa-filter"></i>
+      </button>
     </div>
     
-    <div class="price-filter">
-      <input type="number" id="min-price" placeholder="Min price" min="0">
-      <span class="price-separator">to</span>
-      <input type="number" id="max-price" placeholder="Max price" min="0">
-      <button class="filter-apply-btn" id="apply-price-filter">Apply</button>
+    <!-- Filter Panel (hidden by default) -->
+    <div class="filter-panel" id="filter-panel" style="display: none;">
+      <div class="filter-content">
+        <!-- Category Filter -->
+        <div class="filter-section">
+          <h4 class="filter-title">Category</h4>
+          <div class="filter-chips">
+            <button class="chip active" data-category="all">All</button>
+            <button class="chip" data-category="electronics">Electronics</button>
+            <button class="chip" data-category="clothing">Clothing</button>
+            <button class="chip" data-category="home">Home & Garden</button>
+            <button class="chip" data-category="beauty">Beauty</button>
+            <button class="chip" data-category="other">Others</button>
+          </div>
+        </div>
+        
+        <!-- Price Filter -->
+        <div class="filter-section">
+          <h4 class="filter-title">Price Range (₦)</h4>
+          <div class="price-filter">
+            <input type="number" id="min-price" placeholder="Min" min="0">
+            <span class="price-separator">to</span>
+            <input type="number" id="max-price" placeholder="Max" min="0">
+            <button class="filter-apply-btn" id="apply-price-filter">Apply</button>
+          </div>
+        </div>
+        
+        <!-- Close Filter Button -->
+        <button class="close-filter-btn" id="close-filter-btn">
+          <i class="fas fa-times"></i> Close Filters
+        </button>
+      </div>
     </div>
-  </section>
+  </div>
 
   <!-- Products Grid -->
   <section class="explore-products-section">
@@ -329,14 +355,12 @@
     </div>
     
     <div class="products-grid" id="explore-product-grid">
-      <!-- Products will be loaded here -->
+      <div class="loading-products" id="loading-products">
+        <div class="loading-spinner"></div>
+        <p>Loading products...</p>
+      </div>
     </div>
     
-    <!-- Loading and empty states -->
-    <div class="loading-products" id="loading-products">
-      <div class="loading-spinner"></div>
-      <p>Loading products...</p>
-    </div>
     
     <div class="empty-products" id="empty-products" style="display: none;">
       <i class="fas fa-search"></i>
@@ -348,73 +372,89 @@
 
 <!-- Favourites Tab Content -->
 <main class="tab-content" id="tab-fav">
-  <!-- Favourites Header -->
-  <section class="favourites-header-section">
-    <div class="favourites-header-content">
-      <div class="favourites-icon">
-        <i class="fas fa-heart"></i>
-      </div>
-      <div class="favourites-info">
-        <h2 class="favourites-title">Your Favourites</h2>
-        <p class="favourites-subtitle" id="favourites-count">0 items saved</p>
-      </div>
-    </div>
-  </section>
+  <!-- Tab Navigation -->
+  <div class="favourites-tabs">
+    <button class="fav-tab active" data-tab="products">
+      <i class="fas fa-heart"></i>
+      <span>Saved Products</span>
+    </button>
+    <button class="fav-tab" data-tab="sellers">
+      <i class="fas fa-user-check"></i>
+      <span>Followed Sellers</span>
+    </button>
+  </div>
 
-  <!-- Filter Options -->
-  <section class="favourites-filter-section">
-    <div class="filter-options">
-      <button class="filter-option active" data-filter="all">All Items</button>
-      <button class="filter-option" data-filter="available">Available</button>
-      <button class="filter-option" data-filter="sold">Out of Stock</button>
-    </div>
-    
-    <div class="sort-options">
-      <select id="favourites-sort" class="sort-select">
-        <option value="recent">Recently Added</option>
-        <option value="price-low">Price: Low to High</option>
-        <option value="price-high">Price: High to Low</option>
-        <option value="name">Name: A to Z</option>
-      </select>
-    </div>
-  </section>
-
-  <!-- Favourites Grid -->
-  <section class="favourites-grid-section">
-    <div class="favourites-grid" id="favourites-grid">
-      <!-- Favourite items will be loaded here -->
-    </div>
-    
-    <!-- Empty State -->
-    <div class="empty-favourites" id="empty-favourites">
-      <div class="empty-icon">
-        <i class="fas fa-heart"></i>
+  <!-- Saved Products Tab -->
+  <div class="fav-tab-content active" id="fav-products">
+    <section class="favourites-header-section">
+      <div class="favourites-header-content">
+        <div class="favourites-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div class="favourites-info">
+          <h2 class="favourites-title">Your Favourites</h2>
+          <p class="favourites-subtitle" id="favourites-count">0 items saved</p>
+        </div>
       </div>
-      <h3>No favourites yet</h3>
-      <p>Tap the heart icon on any product to save it here</p>
-      <a href="#tab-explore" class="btn-secondary explore-btn">
-        <i class="fas fa-compass"></i> Explore Products
-      </a>
-    </div>
-    
-    <!-- Loading State -->
-    <div class="loading-favourites" id="loading-favourites">
-      <div class="loading-spinner"></div>
-      <p>Loading your favourites...</p>
-    </div>
-  </section>
+    </section>
 
-  <!-- Quick Actions -->
-  <section class="favourites-actions" id="favourites-actions" style="display: none;">
-    <div class="action-buttons">
-      <button class="action-btn bulk-remove-btn" id="bulk-remove-btn">
-        <i class="fas fa-trash"></i> Remove Selected
-      </button>
-      <button class="action-btn clear-all-btn" id="clear-all-btn">
-        <i class="fas fa-ban"></i> Clear All
-      </button>
-    </div>
-  </section>
+    <!-- Favourites Grid -->
+    <section class="favourites-grid-section">
+      <div class="favourites-grid" id="favourites-grid">
+        <!-- Favourite items will be loaded here -->
+      </div>
+      
+      <!-- Empty State -->
+      <div class="empty-favourites" id="empty-favourites">
+        <div class="empty-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <h3>No favourites yet</h3>
+        <p>Tap the heart icon on any product to save it here</p>
+        <a href="#tab-explore" class="btn-secondary explore-btn">
+          <i class="fas fa-compass"></i> Explore Products
+        </a>
+      </div>
+      
+      <!-- Loading State -->
+      <div class="loading-favourites" id="loading-favourites">
+        <div class="loading-spinner"></div>
+        <p>Loading your favourites...</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Followed Sellers Tab -->
+  <div class="fav-tab-content" id="fav-sellers">
+    <section class="followed-sellers-section">
+      <div class="section-header">
+        <h2 class="section-title">Followed Sellers</h2>
+        <p class="section-subtitle" id="followed-count">0 sellers followed</p>
+      </div>
+      
+      <div class="sellers-list" id="sellers-list">
+        <!-- Followed sellers will be loaded here -->
+      </div>
+      
+      <!-- Empty State -->
+      <div class="empty-sellers" id="empty-sellers">
+        <div class="empty-icon">
+          <i class="fas fa-user-plus"></i>
+        </div>
+        <h3>No sellers followed</h3>
+        <p>Follow sellers to see their latest products here</p>
+        <a href="#tab-explore" class="btn-secondary explore-btn">
+          <i class="fas fa-compass"></i> Explore Sellers
+        </a>
+      </div>
+      
+      <!-- Loading State -->
+      <div class="loading-sellers" id="loading-sellers">
+        <div class="loading-spinner"></div>
+        <p>Loading followed sellers...</p>
+      </div>
+    </section>
+  </div>
 </main>
 
     <!-- Profile Tab Content -->
@@ -431,14 +471,14 @@
       
       <div class="profile-info">
         <div class="profile-name-section">
-          <h2 id="profile-display-name">Your Name</h2>
+          <h2 id="profile-display-name">username</h2>
           <button class="edit-profile-btn" id="edit-profile-btn">
             <i class="fas fa-edit"></i> Edit
           </button>
         </div>
         
         <p class="profile-email" id="profile-display-email">email@example.com</p>
-        <p class="profile-role" id="profile-role">Buyer</p>
+        <p class="profile-role" id="profile-role">buyer</p>
         
         <!-- Buyer Stats -->
         <div class="buyer-stats" id="buyer-stats">
@@ -469,11 +509,20 @@
             </button>
           </div>
         </div>
-        
-        <!-- Become Seller Button (for buyers) -->
-        <button class="become-seller-btn" id="become-seller-btn">
-          <i class="fas fa-store"></i> Become a Seller
-        </button>
+        <div class="profile-actions">
+  <div class="kebab-menu-container">
+    <button class="kebab-menu-btn" id="profile-kebab-btn">
+      <i class="fas fa-ellipsis-h"></i>
+    </button>
+    
+    <div class="kebab-dropdown" id="profile-dropdown" style="display: none;">
+      <button class="dropdown-item" id="setup-seller-btn">
+        <i class="fas fa-store"></i>
+        <span>Start Selling</span>
+      </button>
+    </div>
+  </div>
+</div>
       </div>
     </div>
   </section>
@@ -508,7 +557,7 @@
         </div>
       </div>
       
-      <div class="stat-card">
+      <!--<div class="stat-card">
         <div class="stat-icon">
           <i class="fas fa-star"></i>
         </div>
@@ -516,7 +565,7 @@
           <h3 class="stat-title">Rating</h3>
           <p class="stat-value" id="seller-rating">4.8</p>
         </div>
-      </div>
+      </div> -->
     </div>
     
     <!-- Seller's Products -->
@@ -722,10 +771,19 @@
     </div>
   </template>
 
-  <!-- JavaScript -->
+  <!-- JavaScript 
   <script src="/js/dashboard.js"></script>
-  <script src="/js/explore.js" ></script>
-  <script src="/js/favourite.js"></script>
-  <script src="/js/profile.js"></script>
+  <script src="/js/dashboardHelper.js" ></script>
+  -->
+<!-- Replace this: -->
+<script src="dashboard.js"></script>
+
+<!-- With these: -->
+<script type="module" src="dashboard-main.js"></script>
+<script type="module" src="shared.js"></script>
+<script type="module" src="home.js"></script>
+<script type="module" src="explore.js"></script>
+<script type="module" src="favourites.js"></script>
+<script type="module" src="profile.js"></script>
 </body>
 </html>
