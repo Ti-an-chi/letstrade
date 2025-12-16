@@ -6,7 +6,7 @@ let searchTimeout = null;
 
 export async function initExploreTab() {
   try {
-    const products = await API.getSomeProducts(20, 1);
+    const products = await API.getAllProducts();
     
     // Store in session for filtering
     sessionStorage.setItem('exploreProducts', JSON.stringify(products));
