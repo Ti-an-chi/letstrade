@@ -481,7 +481,7 @@ const API = {
   },
   
   // User Actions
-  async becomeSeller() {
+  /*async becomeSeller() {
     await simulateDelay();
     const user = getCurrentUser();
     if (!user) {
@@ -498,7 +498,7 @@ const API = {
     user.bio = '';
     
     return { success: true, user };
-  },
+  },*/
   
   async updateProfile(updates) {
     await simulateDelay();

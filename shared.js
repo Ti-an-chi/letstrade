@@ -1,5 +1,4 @@
 // shared.js - Shared functions across tabs
-
 export function renderProducts(products, containerId, type = 'product') {
   const container = document.getElementById(containerId);
   if (!container) return;

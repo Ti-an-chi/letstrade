@@ -45,19 +45,13 @@ async function loadUserData() {
   try {
     const userData = await API.getUserData();
     currentUser = userData;
-    
-    // Update UI with user data
     updateUserUI(userData);
     
-    // Update seller dashboard if user is seller
-    if (userData.isSeller) {
+    if (userData.role === 'seller') {
       updateSellerDashboard(userData);
     }
-    
-    // Cache user data
     cachedData.profile.data = userData;
     cachedData.profile.loaded = true;
-    
   } catch (error) {
     console.error('Failed to load user data:', error);
     // Use default user data as fallback
@@ -242,14 +236,14 @@ function setupGlobalEventListeners() {
       dropdown.style.display = 'none';
       
       if (confirm('Ready to start your seller journey? You\'ll be able to list products and grow your business.')) {
-        API.becomeSeller().then(response => {
-          showSuccessMessage('Welcome to the seller community!');
+        /*API.becomeSeller().then(response => {
+          showSuccessMessage('Welcome to the seller community!');*/
           // Refresh user data
-          loadUserData();
-        }).catch(error => {
-          console.error('Failed to become seller:', error);
-          alert('Failed to setup seller account. Please try again.');
-        });
+          window.location.href = sellerSignup.html;
+          //loadUserData();
+        //}).catch(error => {
+          //console.error('Failed to become seller:', error);
+          //alert('Failed to setup seller account. Please try again.');});
       }
     });
   }
