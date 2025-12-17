@@ -462,7 +462,7 @@
   }
 }
 
-/* Kebab Menu for Profile */
+/* Kebab Menu for Profile 
 .profile-actions {
   width: 100%;
   display: flex;
@@ -470,15 +470,15 @@
   margin-top: 20px;
   padding-top: 20px;
   border-top: 1px solid var(--border);
-}
+} */
 
 .kebab-menu-container {
   position: relative;
 }
 
 .kebab-menu-btn {
-  width: 48px;
-  height: 48px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background-color: var(--background);
   border: 1px solid var(--border);
@@ -538,4 +538,72 @@
 .dropdown-item span {
   font-size: 14px;
   font-weight: 500;
+}
+
+/* Favourites Preview in Profile */
+.profile-favourites-preview {
+  margin-bottom: 32px;
+}
+
+.favourites-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.favourite-preview-item {
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.favourite-preview-image {
+  height: 80px;
+  background-color: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.favourite-preview-image i {
+  font-size: 24px;
+  color: var(--primary);
+}
+
+.favourite-preview-details {
+  padding: 8px;
+}
+
+.favourite-preview-title {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.favourite-preview-price {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--secondary);
+}
+
+.empty-favourites-preview {
+  text-align: center;
+  padding: 20px;
+  color: var(--hash);
+  font-size: 14px;
+}
+
+.empty-favourites-preview a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.empty-favourites-preview a:hover {
+  text-decoration: underline;
 }

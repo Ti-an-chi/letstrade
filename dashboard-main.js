@@ -207,6 +207,10 @@ async function loadTabContent(tabId) {
   }
 }
 
+// Listen for tab switch events from other modules
+document.addEventListener('switchTab', (e) => {
+  switchToTab(e.detail);
+});
 // Global Event Listeners
 function setupGlobalEventListeners() {
   // Kebab menu toggle

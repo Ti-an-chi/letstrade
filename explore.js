@@ -1,25 +1,36 @@
-// explore.js - Explore tab functionality
-import API from './api.js';
-import { renderProducts, formatPrice } from './shared.js';
+// explore.js - Explore tab functionality with pagination
+import { ProductPagination } from './pagination.js';
 
-let searchTimeout = null;
+let pagination;
 
 export async function initExploreTab() {
   try {
-    const products = await API.getAllProducts();
+    // Initialize pagination
+    pagination = new ProductPagination('explore-product-grid', 'explore');
     
-    // Store in session for filtering
-    sessionStorage.setItem('exploreProducts', JSON.stringify(products));
+    // Setup UI
+    setupExploreUI();
     
-    renderProducts(products, 'explore-product-grid', 'explore');
-    updateResultsCount(products.length);
+    // Load initial page (from URL or page 1)
+    await pagination.initFromURL();
     
-    // Setup search and filters
+    // Setup interactions
     setupExploreInteractions();
     
   } catch (error) {
     console.error('Failed to load explore content:', error);
-    alert('Failed to load products.');
+    showErrorMessage('Failed to load products.');
+  }
+}
+
+function setupExploreUI() {
+  // Add pagination controls container if not exists
+  const productsSection = document.querySelector('.explore-products-section');
+  if (productsSection && !document.getElementById('pagination-controls')) {
+    const paginationDiv = document.createElement('div');
+    paginationDiv.id = 'pagination-controls';
+    paginationDiv.className = 'pagination-controls';
+    productsSection.appendChild(paginationDiv);
   }
 }
 
@@ -27,10 +38,19 @@ function setupExploreInteractions() {
   // Search input with debounce
   const searchInput = document.getElementById('explore-search-input');
   if (searchInput) {
+    let searchTimeout;
     searchInput.addEventListener('input', function() {
       clearTimeout(searchTimeout);
       searchTimeout = setTimeout(() => {
-        filterExploreProducts();
+        const query = this.value.trim();
+        if (query) {
+          pagination.search(query, 1); // Reset to page 1 on new search
+        } else {
+          // Remove search filter if empty
+          const filters = { ...pagination.currentFilters };
+          delete filters.search;
+          pagination.loadPage(1, filters);
+        }
       }, 500);
     });
   }
@@ -41,14 +61,43 @@ function setupExploreInteractions() {
     chip.addEventListener('click', function() {
       filterChips.forEach(c => c.classList.remove('active'));
       this.classList.add('active');
-      filterExploreProducts();
+      
+      const category = this.dataset.category;
+      const filters = { ...pagination.currentFilters };
+      
+      if (category === 'all') {
+        delete filters.category;
+      } else {
+        filters.category = category;
+      }
+      
+      pagination.loadPage(1, filters); // Reset to page 1
     });
   });
   
   // Price filter
   const applyPriceBtn = document.getElementById('apply-price-filter');
   if (applyPriceBtn) {
-    applyPriceBtn.addEventListener('click', filterExploreProducts);
+    applyPriceBtn.addEventListener('click', () => {
+      const minPriceInput = document.getElementById('min-price');
+      const maxPriceInput = document.getElementById('max-price');
+      
+      const filters = { ...pagination.currentFilters };
+      
+      if (minPriceInput && minPriceInput.value) {
+        filters.minPrice = parseFloat(minPriceInput.value);
+      } else {
+        delete filters.minPrice;
+      }
+      
+      if (maxPriceInput && maxPriceInput.value) {
+        filters.maxPrice = parseFloat(maxPriceInput.value);
+      } else {
+        delete filters.maxPrice;
+      }
+      
+      pagination.loadPage(1, filters); // Reset to page 1
+    });
   }
   
   // Filter toggle
@@ -67,62 +116,34 @@ function setupExploreInteractions() {
       filterPanel.style.display = 'none';
     });
   }
-}
-
-async function filterExploreProducts() {
-  const searchInput = document.getElementById('explore-search-input');
-  const activeCategory = document.querySelector('.filter-chips .chip.active');
-  const minPriceInput = document.getElementById('min-price');
-  const maxPriceInput = document.getElementById('max-price');
   
-  const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
-  const category = activeCategory ? activeCategory.dataset.category : 'all';
-  const minPrice = minPriceInput ? parseFloat(minPriceInput.value) || 0 : 0;
-  const maxPrice = maxPriceInput ? parseFloat(maxPriceInput.value) || Infinity : Infinity;
-  
-  try {
-    let filteredProducts;
-    
-    if (searchTerm || category !== 'all' || minPrice > 0 || maxPrice < Infinity) {
-      // Apply local filters
-      const products = JSON.parse(sessionStorage.getItem('exploreProducts') || '[]');
-      filteredProducts = products.filter(product => {
-        // Search filter
-        if (searchTerm && !product.name.toLowerCase().includes(searchTerm) && 
-            !product.description?.toLowerCase().includes(searchTerm) &&
-            !product.seller?.toLowerCase().includes(searchTerm)) {
-          return false;
-        }
-        
-        // Category filter
-        if (category !== 'all' && product.category !== category) {
-          return false;
-        }
-        
-        // Price filter
-        if (product.price < minPrice || product.price > maxPrice) {
-          return false;
-        }
-        
-        return true;
-      });
-    } else {
-      // Show all products
-      const products = JSON.parse(sessionStorage.getItem('exploreProducts') || '[]');
-      filteredProducts = [...products];
+  // Close filter when clicking outside (mobile)
+  document.addEventListener('click', function(e) {
+    if (filterPanel && filterPanel.style.display === 'block' && 
+        !e.target.closest('.filter-panel') && 
+        !e.target.closest('.filter-toggle-btn')) {
+      filterPanel.style.display = 'none';
     }
-    
-    renderProducts(filteredProducts, 'explore-product-grid', 'explore');
-    updateResultsCount(filteredProducts.length);
-    
-  } catch (error) {
-    console.error('Failed to filter products:', error);
-  }
+  });
 }
 
-function updateResultsCount(count) {
-  const resultsCountEl = document.getElementById('results-count');
-  if (resultsCountEl) {
-    resultsCountEl.textContent = `${count} ${count === 1 ? 'product' : 'products'}`;
+// Error display function
+function showErrorMessage(message) {
+  const errorEl = document.createElement('div');
+  errorEl.className = 'error-message';
+  errorEl.innerHTML = `
+    <i class="fas fa-exclamation-circle"></i>
+    <span>${message}</span>
+  `;
+  
+  // Insert at top of explore section
+  const exploreSection = document.querySelector('.explore-products-section');
+  if (exploreSection) {
+    exploreSection.insertBefore(errorEl, exploreSection.firstChild);
+    
+    // Remove after 5 seconds
+    setTimeout(() => {
+      errorEl.remove();
+    }, 5000);
   }
 }

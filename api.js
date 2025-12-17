@@ -519,27 +519,68 @@ const API = {
       mockDatabase.currentUserId = 1; // John Doe (buyer)
     }
     return { success: true, currentUser: getCurrentUser() };
+  },
+  
+  async getProductsPaginated(page = 1, limit = 20, filters = {}) {
+    await simulateDelay();
+    
+    // Get all products (in real app, this would be a paginated API call)
+    let products = [...mockDatabase.products];
+    
+    // Apply filters if any
+    if (filters.category && filters.category !== 'all') {
+      products = products.filter(p => p.category === filters.category);
+    }
+    
+    if (filters.search) {
+      const searchTerm = filters.search.toLowerCase();
+      products = products.filter(p => 
+        p.name.toLowerCase().includes(searchTerm) ||
+        p.description.toLowerCase().includes(searchTerm) ||
+        p.seller.toLowerCase().includes(searchTerm)
+      );
+    }
+    
+    if (filters.minPrice) {
+      products = products.filter(p => p.price >= filters.minPrice);
+    }
+    
+    if (filters.maxPrice) {
+      products = products.filter(p => p.price <= filters.maxPrice);
+    }
+    
+    // Calculate pagination
+    const total = products.length;
+    const totalPages = Math.ceil(total / limit);
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    
+    // Get products for current page
+    const paginatedProducts = products.slice(startIndex, endIndex);
+    
+    return {
+      products: paginatedProducts,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalProducts: total,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+        limit
+      }
+    };
+  },
+  
+  async searchProducts(query, page = 1, limit = 20) {
+    await simulateDelay();
+    return this.getProductsPaginated(page, limit, { search: query });
+  },
+  
+  async getProductsByCategory(category, page = 1, limit = 20) {
+    await simulateDelay();
+    return this.getProductsPaginated(page, limit, { category });
   }
 };
 
 // Export all API methods
 export default API;
-
-// Also export individual functions if needed
-/*export {
-  getUserData: API.getUserData,
-  getCategories: API.getCategories,
-  getAllProducts: API.getAllProducts,
-  getRecommendedProducts: API.getRecommendedProducts,
-  getSellerProducts: API.getSellerProducts,
-  getFavourites: API.getFavourites,
-  searchProducts: API.searchProducts,
-  addToCart: API.addToCart,
-  addToFavourites: API.addToFavourites,
-  removeFromFavourites: API.removeFromFavourites,
-  clearAllFavourites: API.clearAllFavourites,
-  deleteProduct: API.deleteProduct,
-  becomeSeller: API.becomeSeller,
-  updateProfile: API.updateProfile,
-  switchUserType: API.switchUserType
-};*/

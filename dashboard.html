@@ -108,7 +108,37 @@
           <button class="icon-btn cart-btn" aria-label="Cart">
             <i class="fas fa-shopping-cart"></i>
           </button>
-        </div>
+            <div class="kebab-menu-container">
+              <button class="kebab-menu-btn" id="profile-kebab-btn">
+                <i class="fas fa-ellipsis-h"></i>
+              </button>
+              
+              <div class="kebab-dropdown" id="profile-dropdown" style="display: none;">
+                <button class="dropdown-item" id="edit-profile-btn">
+                  <i class="fas fa-user-edit"></i>
+                  <span>Edit Profile</span>
+                </button>
+                <button class="dropdown-item" id="account-settings-btn">
+                  <i class="fas fa-cog"></i>
+                  <span>Account Settings</span>
+                </button>
+                <button class="dropdown-item" id="help-support-btn">
+                  <i class="fas fa-question-circle"></i>
+                  <span>Help & Support</span>
+                </button>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item become-seller-item" id="setup-seller-btn">
+                  <i class="fas fa-store"></i>
+                  <span>Start Selling</span>
+                </button>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item logout-item" id="logout-btn">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Log Out</span>
+                </button>
+              </div>
+            </div>
+          </div>
       </div>
     </header>
 
@@ -169,8 +199,7 @@
           </div>
         </div>
       </section>
-
-
+      
       <!-- Top Banner -->
       <section class="banner-section">
         <div class="banner-content">
@@ -292,358 +321,351 @@
       <div class="loading-recommended" id="loading-recommended" style="display: none;">
         <div class="loading-spinner"></div>
         <p>Loading recommendations...</p>
-</div>
+      </div>
     </main>
 
-<!-- Explore Tab Content -->
-<main class="tab-content" id="tab-explore">
-  <!-- Sticky Search & Filter Bar -->
-  <div class="sticky-search-filter" id="sticky-search-filter">
-    <div class="search-filter-container">
-      <!-- Search Bar -->
-      <div class="sticky-search-bar">
-        <i class="fas fa-search"></i>
-        <input type="text" id="explore-search-input" placeholder="Search products..." autocomplete="off">
-      </div>
-      
-      <!-- Filter Toggle Button -->
-      <button class="filter-toggle-btn" id="filter-toggle-btn">
-        <i class="fas fa-filter"></i>
-      </button>
-    </div>
-    
-    <!-- Filter Panel (hidden by default) -->
-    <div class="filter-panel" id="filter-panel" style="display: none;">
-      <div class="filter-content">
-        <!-- Category Filter -->
-        <div class="filter-section">
-          <h4 class="filter-title">Category</h4>
-          <div class="filter-chips">
-            <button class="chip active" data-category="all">All</button>
-            <button class="chip" data-category="electronics">Electronics</button>
-            <button class="chip" data-category="clothing">Clothing</button>
-            <button class="chip" data-category="home">Home & Garden</button>
-            <button class="chip" data-category="beauty">Beauty</button>
-            <button class="chip" data-category="other">Others</button>
+    <!-- Explore Tab Content -->
+    <main class="tab-content" id="tab-explore">
+      <!-- Sticky Search & Filter Bar -->
+      <div class="sticky-search-filter" id="sticky-search-filter">
+        <div class="search-filter-container">
+          <!-- Search Bar -->
+          <div class="sticky-search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="explore-search-input" placeholder="Search products..." autocomplete="off">
           </div>
-        </div>
-        
-        <!-- Price Filter -->
-        <div class="filter-section">
-          <h4 class="filter-title">Price Range (₦)</h4>
-          <div class="price-filter">
-            <input type="number" id="min-price" placeholder="Min" min="0">
-            <span class="price-separator">to</span>
-            <input type="number" id="max-price" placeholder="Max" min="0">
-            <button class="filter-apply-btn" id="apply-price-filter">Apply</button>
-          </div>
-        </div>
-        
-        <!-- Close Filter Button -->
-        <button class="close-filter-btn" id="close-filter-btn">
-          <i class="fas fa-times"></i> Close Filters
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Products Grid -->
-  <section class="explore-products-section">
-    <div class="section-header">
-      <h2 class="section-title">Discover Products</h2>
-      <div class="results-count" id="results-count">0 products</div>
-    </div>
-    
-    <div class="products-grid" id="explore-product-grid">
-      <div class="loading-products" id="loading-products">
-        <div class="loading-spinner"></div>
-        <p>Loading products...</p>
-      </div>
-    </div>
-    
-    
-    <div class="empty-products" id="empty-products" style="display: none;">
-      <i class="fas fa-search"></i>
-      <h3>No products found</h3>
-      <p>Try adjusting your search or filters</p>
-    </div>
-  </section>
-</main>
-
-<!-- Favourites Tab Content -->
-<main class="tab-content" id="tab-fav">
-  <!-- Tab Navigation -->
-  <div class="favourites-tabs">
-    <button class="fav-tab active" data-tab="products">
-      <i class="fas fa-heart"></i>
-      <span>Saved Products</span>
-    </button>
-    <button class="fav-tab" data-tab="sellers">
-      <i class="fas fa-user-check"></i>
-      <span>Followed Sellers</span>
-    </button>
-  </div>
-
-  <!-- Saved Products Tab -->
-  <div class="fav-tab-content active" id="fav-products">
-    <section class="favourites-header-section">
-      <div class="favourites-header-content">
-        <div class="favourites-icon">
-          <i class="fas fa-heart"></i>
-        </div>
-        <div class="favourites-info">
-          <h2 class="favourites-title">Your Favourites</h2>
-          <p class="favourites-subtitle" id="favourites-count">0 items saved</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Favourites Grid -->
-    <section class="favourites-grid-section">
-      <div class="favourites-grid" id="favourites-grid">
-        <!-- Favourite items will be loaded here -->
-      </div>
       
-      <!-- Empty State -->
-      <div class="empty-favourites" id="empty-favourites">
-        <div class="empty-icon">
-          <i class="fas fa-heart"></i>
-        </div>
-        <h3>No favourites yet</h3>
-        <p>Tap the heart icon on any product to save it here</p>
-        <a href="#tab-explore" class="btn-secondary explore-btn">
-          <i class="fas fa-compass"></i> Explore Products
-        </a>
-      </div>
-      
-      <!-- Loading State -->
-      <div class="loading-favourites" id="loading-favourites">
-        <div class="loading-spinner"></div>
-        <p>Loading your favourites...</p>
-      </div>
-    </section>
-  </div>
-
-  <!-- Followed Sellers Tab -->
-  <div class="fav-tab-content" id="fav-sellers">
-    <section class="followed-sellers-section">
-      <div class="section-header">
-        <h2 class="section-title">Followed Sellers</h2>
-        <p class="section-subtitle" id="followed-count">0 sellers followed</p>
-      </div>
-      
-      <div class="sellers-list" id="sellers-list">
-        <!-- Followed sellers will be loaded here -->
-      </div>
-      
-      <!-- Empty State -->
-      <div class="empty-sellers" id="empty-sellers">
-        <div class="empty-icon">
-          <i class="fas fa-user-plus"></i>
-        </div>
-        <h3>No sellers followed</h3>
-        <p>Follow sellers to see their latest products here</p>
-        <a href="#tab-explore" class="btn-secondary explore-btn">
-          <i class="fas fa-compass"></i> Explore Sellers
-        </a>
-      </div>
-      
-      <!-- Loading State -->
-      <div class="loading-sellers" id="loading-sellers">
-        <div class="loading-spinner"></div>
-        <p>Loading followed sellers...</p>
-      </div>
-    </section>
-  </div>
-</main>
-
-    <!-- Profile Tab Content -->
-<main class="tab-content" id="tab-profile">
-  <!-- Profile Header -->
-  <section class="profile-header-section">
-    <div class="profile-header-content">
-      <div class="profile-avatar-large">
-        <img src="" alt="Profile" id="profile-avatar-img" onerror="this.src='https://ui-avatars.com/api/?name=User&background=3483E0&color=fff'">
-        <button class="edit-avatar-btn" id="edit-avatar-btn">
-          <i class="fas fa-camera"></i>
-        </button>
-      </div>
-      
-      <div class="profile-info">
-        <div class="profile-name-section">
-          <h2 id="profile-display-name">username</h2>
-          <button class="edit-profile-btn" id="edit-profile-btn">
-            <i class="fas fa-edit"></i> Edit
+          <!-- Filter Toggle Button -->
+          <button class="filter-toggle-btn" id="filter-toggle-btn">
+            <i class="fas fa-filter"></i>
           </button>
         </div>
-        
-        <p class="profile-email" id="profile-display-email">email@example.com</p>
-        <p class="profile-role" id="profile-role">buyer</p>
-        
-        <!-- Buyer Stats -->
-        <div class="buyer-stats" id="buyer-stats">
-          <div class="stat-item">
-            <span class="stat-value" id="orders-count">0</span>
-            <span class="stat-label">Orders</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value" id="cart-count">0</span>
-            <span class="stat-label">In Cart</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value" id="favorites-count">0</span>
-            <span class="stat-label">Favorites</span>
-          </div>
-        </div>
-        
-        <!-- Seller Profile Link (for sellers) -->
-        <div class="seller-profile-link" id="seller-profile-link" style="display: none;">
-          <div class="profile-link-box">
-            <i class="fas fa-link"></i>
-            <div class="link-info">
-              <span class="link-label">Your Profile Link</span>
-              <span class="link-url" id="profile-link-url">ontropp.com/seller/username</span>
+    
+        <!-- Filter Panel (hidden by default) -->
+        <div class="filter-panel" id="filter-panel" style="display: none;">
+          <div class="filter-content">
+            <!-- Category Filter -->
+            <div class="filter-section">
+              <h4 class="filter-title">Category</h4>
+              <div class="filter-chips">
+                <button class="chip active" data-category="all">All</button>
+                <button class="chip" data-category="electronics">Electronics</button>
+                <button class="chip" data-category="clothing">Clothing</button>
+                <button class="chip" data-category="home">Home & Garden</button>
+                <button class="chip" data-category="beauty">Beauty</button>
+                <button class="chip" data-category="other">Others</button>
+              </div>
             </div>
-            <button class="copy-link-btn" id="copy-link-btn">
-              <i class="fas fa-copy"></i> Copy
+        
+            <!-- Price Filter -->
+            <div class="filter-section">
+              <h4 class="filter-title">Price Range (₦)</h4>
+              <div class="price-filter">
+                <input type="number" id="min-price" placeholder="Min" min="0">
+                <span class="price-separator">to</span>
+                <input type="number" id="max-price" placeholder="Max" min="0">
+                <button class="filter-apply-btn" id="apply-price-filter">Apply</button>
+              </div>
+            </div>
+        
+            <!-- Close Filter Button -->
+            <button class="close-filter-btn" id="close-filter-btn">
+              <i class="fas fa-times"></i> Close Filters
             </button>
           </div>
         </div>
-        <div class="profile-actions">
-  <div class="kebab-menu-container">
-    <button class="kebab-menu-btn" id="profile-kebab-btn">
-      <i class="fas fa-ellipsis-h"></i>
-    </button>
+      </div>
+
+      <!-- Products Grid -->
+      <section class="explore-products-section">
+        <div class="section-header">
+          <h2 class="section-title">Discover Products</h2>
+          <div class="results-count" id="results-count">0 products</div>
+        </div>
     
-    <div class="kebab-dropdown" id="profile-dropdown" style="display: none;">
-      <button class="dropdown-item" id="setup-seller-btn">
-        <i class="fas fa-store"></i>
-        <span>Start Selling</span>
-      </button>
-    </div>
+        <div class="products-grid" id="explore-product-grid">
+          <div class="loading-products" id="loading-products">
+            <div class="loading-spinner"></div>
+            <p>Loading products...</p>
+          </div>
+        </div>
+        <div class="pagination-controls" id="pagination-controls">
+          <!-- Pagination buttons will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="empty-products" id="empty-products" style="display: none;">
+          <i class="fas fa-search"></i>
+          <h3>No products found</h3>
+          <p>Try adjusting your search or filters</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Favourites Tab Content -->
+    <main class="tab-content" id="tab-fav">
+      <!-- Tab Navigation -->
+      <div class="favourites-tabs">
+        <button class="fav-tab active" data-tab="products">
+          <i class="fas fa-heart"></i>
+          <span>Saved Products</span>
+        </button>
+        <button class="fav-tab" data-tab="sellers">
+          <i class="fas fa-user-check"></i>
+          <span>Followed Sellers</span>
+        </button>
+      </div>
+
+      <!-- Saved Products Tab -->
+      <div class="fav-tab-content active" id="fav-products">
+        <section class="favourites-header-section">
+          <div class="favourites-header-content">
+            <div class="favourites-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <div class="favourites-info">
+              <h2 class="favourites-title">Your Favourites</h2>
+              <p class="favourites-subtitle" id="favourites-count">0 items saved</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Favourites Grid -->
+        <section class="favourites-grid-section">
+          <div class="favourites-grid" id="favourites-grid">
+            <!-- Favourite items will be loaded here -->
+          </div>
+      
+          <!-- Empty State -->
+          <div class="empty-favourites" id="empty-favourites">
+            <div class="empty-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h3>No favourites yet</h3>
+            <p>Tap the heart icon on any product to save it here</p>
+            <a href="#tab-explore" class="btn-secondary explore-btn">
+              <i class="fas fa-compass"></i> Explore Products
+            </a>
+          </div>
+      
+          <!-- Loading State -->
+          <div class="loading-favourites" id="loading-favourites">
+            <div class="loading-spinner"></div>
+            <p>Loading your favourites...</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- Followed Sellers Tab -->
+      <div class="fav-tab-content" id="fav-sellers">
+        <section class="followed-sellers-section">
+          <div class="section-header">
+            <h2 class="section-title">Followed Sellers</h2>
+            <p class="section-subtitle" id="followed-count">0 sellers followed</p>
+          </div>
+      
+          <div class="sellers-list" id="sellers-list">
+            <!-- Followed sellers will be loaded here -->
+          </div>
+      
+          <!-- Empty State -->
+          <div class="empty-sellers" id="empty-sellers">
+            <div class="empty-icon">
+              <i class="fas fa-user-plus"></i>
+            </div>
+            <h3>No sellers followed</h3>
+            <p>Follow sellers to see their latest products here</p>
+            <a href="#tab-explore" class="btn-secondary explore-btn">
+              <i class="fas fa-compass"></i> Explore Sellers
+            </a>
+          </div>
+      
+          <!-- Loading State -->
+          <div class="loading-sellers" id="loading-sellers">
+            <div class="loading-spinner"></div>
+            <p>Loading followed sellers...</p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Profile Tab Content -->
+    <main class="tab-content" id="tab-profile">
+      <!-- Profile Header -->
+      <section class="profile-header-section">
+        <div class="profile-header-content">
+          <div class="profile-avatar-large">
+            <img src="" alt="Profile" id="profile-avatar-img" onerror="this.src='https://ui-avatars.com/api/?name=User&background=3483E0&color=fff'">
+            <button class="edit-avatar-btn" id="edit-avatar-btn">
+              <i class="fas fa-camera"></i>
+            </button>
+          </div>
+      
+          <div class="profile-info">
+            <div class="profile-name-section">
+              <h2 id="profile-display-name">username</h2>
+              <button class="edit-profile-btn" id="edit-profile-btn">
+                <i class="fas fa-edit"></i> Edit
+              </button>
+            </div>
+        
+            <p class="profile-email" id="profile-display-email">email@example.com</p>
+            <p class="profile-role" id="profile-role">buyer</p>
+        
+            <!-- Buyer Stats -->
+            <div class="buyer-stats" id="buyer-stats">
+              <div class="stat-item">
+                <span class="stat-value" id="orders-count">0</span>
+                <span class="stat-label">Orders</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value" id="cart-count">0</span>
+                <span class="stat-label">In Cart</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value" id="favorites-count">0</span>
+                <span class="stat-label">Favorites</span>
+              </div>
+            </div>
+        
+            <!-- Seller Profile Link (for sellers) -->
+            <div class="seller-profile-link" id="seller-profile-link" style="display: none;">
+              <div class="profile-link-box">
+                <i class="fas fa-link"></i>
+                <div class="link-info">
+                  <span class="link-label">Your Profile Link</span>
+                  <span class="link-url" id="profile-link-url">ontropp.com/seller/username</span>
+                </div>
+                <a class="copy-link-btn" style="border: solid 1px grey; background: none; color: grey; padding: none;" id="copy-link-btn">
+                  <i class="fas fa-copy"></i> Copy
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seller Dashboard Section (only for sellers) -->
+      <section class="profile-seller-dashboard" id="profile-seller-dashboard" style="display: none;">
+        <div class="section-header">
+          <h2 class="section-title">Seller Dashboard</h2>
+          <button class="add-product-btn">
+            <i class="fas fa-plus"></i> Add Product
+          </button>
+        </div>
+    
+        <div class="seller-quick-stats">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-eye"></i>
+            </div>
+            <div class="stat-details">
+              <h3 class="stat-title">Profile Views</h3>
+              <p class="stat-value" id="seller-profile-views">0</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-shopping-bag"></i>
+            </div>
+            <div class="stat-details">
+              <h3 class="stat-title">Total Orders</h3>
+              <p class="stat-value" id="seller-total-orders">0</p>
+            </div>
+          </div>
+           
+          <!--<div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="stat-details">
+              <h3 class="stat-title">Rating</h3>
+              <p class="stat-value" id="seller-rating">4.8</p>
+            </div>
+          </div> -->
+        </div>
+        
+        <!-- Seller's Products -->
+        <div class="profile-products-section">
+          <div class="section-header">
+            <h3 class="section-subtitle">Your Products</h3>
+            <a href="#" class="see-all">View All</a>
+          </div>
+          <div class="products-grid" id="profile-seller-products">
+            <!-- Seller's products will be loaded here -->
+          </div>
+      </div>
+      </section>
+
+      <!-- Buyer Section -->
+      <section class="profile-buyer-section" id="profile-buyer-section">
+        <!-- Recent Orders -->
+        <div class="profile-section">
+          <div class="section-header">
+            <h3 class="section-subtitle">Recent Orders</h3>
+            <a href="#" class="see-all">View All</a>
+          </div>
+          <div class="orders-list" id="recent-orders">
+            <div class="empty-state">
+              <i class="fas fa-shopping-bag"></i>
+              <p>No orders yet</p>
+              <a href="#tab-explore" class="btn-secondary">Start Shopping</a>
+            </div>
+          </div>
+        </div>
+    
+          <!-- Favourites Preview -->
+<section class="profile-favourites-preview">
+  <div class="section-header">
+    <h3 class="section-subtitle">Your Favourites</h3>
+    <a href="#tab-fav" class="see-all">View All</a>
   </div>
-</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Seller Dashboard Section (only for sellers) -->
-  <section class="profile-seller-dashboard" id="profile-seller-dashboard" style="display: none;">
-    <div class="section-header">
-      <h2 class="section-title">Seller Dashboard</h2>
-      <button class="add-product-btn">
-        <i class="fas fa-plus"></i> Add Product
-      </button>
-    </div>
-    
-    <div class="seller-quick-stats">
-      <div class="stat-card">
-        <div class="stat-icon">
-          <i class="fas fa-eye"></i>
+  
+  <div class="favourites-preview-grid" id="profile-favourites-grid">
+    <!-- Favourite products will be loaded here -->
+  </div>
+  
+  <div class="empty-favourites-preview" id="empty-favourites-preview">
+    <p>No favourites yet. <a href="#tab-explore">Explore products</a></p>
+  </div>
+</section>
         </div>
-        <div class="stat-details">
-          <h3 class="stat-title">Profile Views</h3>
-          <p class="stat-value" id="seller-profile-views">0</p>
-        </div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-icon">
-          <i class="fas fa-shopping-bag"></i>
-        </div>
-        <div class="stat-details">
-          <h3 class="stat-title">Total Orders</h3>
-          <p class="stat-value" id="seller-total-orders">0</p>
-        </div>
-      </div>
-      
-      <!--<div class="stat-card">
-        <div class="stat-icon">
-          <i class="fas fa-star"></i>
-        </div>
-        <div class="stat-details">
-          <h3 class="stat-title">Rating</h3>
-          <p class="stat-value" id="seller-rating">4.8</p>
-        </div>
-      </div> -->
-    </div>
-    
-    <!-- Seller's Products -->
-    <div class="profile-products-section">
-      <div class="section-header">
-        <h3 class="section-subtitle">Your Products</h3>
-        <a href="#" class="see-all">View All</a>
-      </div>
-      <div class="products-grid" id="profile-seller-products">
-        <!-- Seller's products will be loaded here -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Buyer Section -->
-  <section class="profile-buyer-section" id="profile-buyer-section">
-    <!-- Recent Orders -->
-    <div class="profile-section">
-      <div class="section-header">
-        <h3 class="section-subtitle">Recent Orders</h3>
-        <a href="#" class="see-all">View All</a>
-      </div>
-      <div class="orders-list" id="recent-orders">
-        <div class="empty-state">
-          <i class="fas fa-shopping-bag"></i>
-          <p>No orders yet</p>
-          <a href="#tab-explore" class="btn-secondary">Start Shopping</a>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Favorites -->
-    <div class="profile-section">
-      <div class="section-header">
-        <h3 class="section-subtitle">Your Favorites</h3>
-        <a href="#tab-fav" class="see-all">View All</a>
-      </div>
-      <div class="favorites-grid" id="favorites-grid">
-        <!-- Favorites will be loaded here -->
-      </div>
-    </div>
-    
-    <!-- Settings -->
-    <div class="profile-section">
-      <div class="section-header">
-        <h3 class="section-subtitle">Account Settings</h3>
-      </div>
-      <div class="settings-list">
-        <a href="#" class="settings-item">
-          <i class="fas fa-user-cog"></i>
-          <span>Personal Information</span>
-          <i class="fas fa-chevron-right"></i>
-        </a>
-        <a href="#" class="settings-item">
-          <i class="fas fa-shield-alt"></i>
-          <span>Privacy & Security</span>
-          <i class="fas fa-chevron-right"></i>
-        </a>
-        <a href="#" class="settings-item">
-          <i class="fas fa-bell"></i>
-          <span>Notifications</span>
-          <i class="fas fa-chevron-right"></i>
-        </a>
-        <a href="#" class="settings-item">
-          <i class="fas fa-question-circle"></i>
-          <span>Help & Support</span>
-          <i class="fas fa-chevron-right"></i>
-        </a>
-        <a href="#" class="settings-item logout-item">
-          <i class="fas fa-sign-out-alt"></i>
-          <span>Log Out</span>
-          <i class="fas fa-chevron-right"></i>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Viewing Other Seller's Profile (hidden by default) -->
+        
+        <!-- Settings
+        <div class="profile-section">
+          <div class="section-header">
+            <h3 class="section-subtitle">Account Settings</h3>
+          </div>
+          <div class="settings-list">
+            <a href="#" class="settings-item">
+              <i class="fas fa-user-cog"></i>
+              <span>Personal Information</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+            <a href="#" class="settings-item">
+              <i class="fas fa-shield-alt"></i>
+              <span>Privacy & Security</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+            <a href="#" class="settings-item">
+              <i class="fas fa-bell"></i>
+              <span>Notifications</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+            <a href="#" class="settings-item">
+              <i class="fas fa-question-circle"></i>
+              <span>Help & Support</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+            <a href="#" class="settings-item logout-item">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Log Out</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+        </div>-->
+      </section>
+      <!-- Viewing Other Seller's Profile (hidden by default) 
   <section class="other-seller-profile" id="other-seller-profile" style="display: none;">
     <div class="profile-header-content">
       <div class="profile-avatar-large">
@@ -687,21 +709,21 @@
       </div>
     </div>
     
-    <!-- Other Seller's Products -->
+    <!-- Other Seller's Products 
     <div class="profile-products-section">
       <div class="section-header">
         <h3 class="section-subtitle">Products by this Seller</h3>
       </div>
       <div class="products-grid" id="other-seller-products-grid">
-        <!-- Other seller's products will be loaded here -->
+        <!-- Other seller's products will be loaded here 
       </div>
     </div>
     
     <button class="back-to-profile-btn" id="back-to-profile-btn">
       <i class="fas fa-arrow-left"></i> Back to My Profile
     </button>
-  </section>
-</main>
+  </section>-->
+    </main>
 
     <!-- Footer -->
     <footer class="dashboard-footer">
