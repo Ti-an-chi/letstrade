@@ -73,7 +73,7 @@ const mockDatabase = {
       price: 12499,
       category: 'home',
       sellerId: 2, // Emma Crafts
-      seller: 'Emma Crafts',
+      seller: 'emma_crafts',
       image: '',
       status: 'available',
       createdAt: '2023-10-28',
@@ -111,8 +111,8 @@ const mockDatabase = {
       description: 'Pack of 3 premium cotton t-shirts',
       price: 9999,
       category: 'clothing',
-      sellerId: 6,
-      seller: 'BasicWear',
+      sellerId: 2,
+      seller: 'emma_crafts',
       image: '',
       status: 'sold',
       createdAt: '2023-10-20',
@@ -125,7 +125,7 @@ const mockDatabase = {
       price: 17499,
       category: 'home',
       sellerId: 2, // Emma Crafts
-      seller: 'Emma Crafts',
+      seller: 'emma_crafts',
       image: '',
       status: 'available',
       createdAt: '2023-11-12',
@@ -233,7 +233,7 @@ const mockDatabase = {
   ],
   
   // Current user ID (simulating logged in user)
-  currentUserId: 1
+  currentUserId: 2
 };
 
 // Simulate network delay
