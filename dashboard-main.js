@@ -47,7 +47,7 @@ async function loadUserData() {
     currentUser = userData;
     updateUserUI(userData);
     
-    if (userData.role === 'seller') {
+    if (userData?.role === 'seller') {
       updateSellerDashboard(userData);
     }
     cachedData.profile.data = userData;
@@ -86,7 +86,7 @@ function updateUserUI(userData) {
   }
   
   // Update buyer stats
-  if (!userData.isSeller) {
+  if (userData.role !== 'seller') {
     updateBuyerStats(userData);
   }
 }
@@ -102,7 +102,6 @@ function updateBuyerStats(userData) {
 }
 
 function updateSellerDashboard(userData) {
-  // Show seller dashboard in home tab
   const sellerBoardEl = document.getElementById('seller-board');
   if (sellerBoardEl) {
     sellerBoardEl.style.display = 'block';

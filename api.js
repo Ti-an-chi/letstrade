@@ -232,7 +232,6 @@ const mockDatabase = {
     { id: 5, productId: 5, userId: 1, addedDate: '2023-11-15' }
   ],
   
-  // Current user ID (simulating logged in user)
   currentUserId: 2
 };
 

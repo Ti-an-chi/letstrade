@@ -100,7 +100,7 @@
     <!-- Header - Always visible -->
     <header class="dashboard-header">
       <div class="header-container">
-        <div class="logo">ONTROPP</div>
+        <div class="logo">ONTROPP.</div>
         <div class="header-actions">
           <button class="icon-btn notification-btn" aria-label="Notifications">
             <i class="fas fa-bell"></i>
@@ -510,7 +510,21 @@
         
             <p class="profile-email" id="profile-display-email">email@example.com</p>
             <p class="profile-role" id="profile-role">buyer</p>
-        
+            
+            <!-- Seller Profile Link -->
+            <div class="seller-profile-link" id="seller-profile-link" style="display: none;">
+              <div class="profile-link-box">
+                <i class="fas fa-link"></i>
+                <div class="link-info">
+                  <span class="link-label">Your Profile Link</span>
+                  <span class="link-url" id="profile-link-url">ontropp.com/seller/username</span>
+                </div>
+                <a class="copy-link-btn" style="border: solid 1px grey; background: none; color: grey; padding: none;" id="copy-link-btn">
+                  <i class="fas fa-copy"></i> Copy
+                </a>
+              </div>
+            </div>
+
             <!-- Buyer Stats -->
             <div class="buyer-stats" id="buyer-stats">
               <div class="stat-item">
@@ -524,20 +538,6 @@
               <div class="stat-item">
                 <span class="stat-value" id="favorites-count">0</span>
                 <span class="stat-label">Favorites</span>
-              </div>
-            </div>
-        
-            <!-- Seller Profile Link (for sellers) -->
-            <div class="seller-profile-link" id="seller-profile-link" style="display: none;">
-              <div class="profile-link-box">
-                <i class="fas fa-link"></i>
-                <div class="link-info">
-                  <span class="link-label">Your Profile Link</span>
-                  <span class="link-url" id="profile-link-url">ontropp.com/seller/username</span>
-                </div>
-                <a class="copy-link-btn" style="border: solid 1px grey; background: none; color: grey; padding: none;" id="copy-link-btn">
-                  <i class="fas fa-copy"></i> Copy
-                </a>
               </div>
             </div>
           </div>
@@ -594,9 +594,9 @@
           <div class="products-grid" id="profile-seller-products">
             <!-- Seller's products will be loaded here -->
           </div>
-      </div>
+        </div>
       </section>
-
+      
       <!-- Buyer Section -->
       <section class="profile-buyer-section" id="profile-buyer-section">
         <!-- Recent Orders -->
@@ -613,24 +613,22 @@
             </div>
           </div>
         </div>
-    
-          <!-- Favourites Preview -->
-<section class="profile-favourites-preview">
-  <div class="section-header">
-    <h3 class="section-subtitle">Your Favourites</h3>
-    <a href="#tab-fav" class="see-all">View All</a>
-  </div>
-  
-  <div class="favourites-preview-grid" id="profile-favourites-grid">
-    <!-- Favourite products will be loaded here -->
-  </div>
-  
-  <div class="empty-favourites-preview" id="empty-favourites-preview">
-    <p>No favourites yet. <a href="#tab-explore">Explore products</a></p>
-  </div>
-</section>
-        </div>
         
+        <!-- Favourites Preview -->
+        <section class="profile-favourites-preview">
+          <div class="section-header">
+            <h3 class="section-subtitle">Your Favourites</h3>
+            <a href="#tab-fav" class="see-all">View All</a>
+          </div>
+            
+          <div class="favourites-preview-grid" id="profile-favourites-grid">
+              <!-- Favourite products will be loaded here -->
+          </div>
+          
+          <div class="empty-favourites-preview" id="empty-favourites-preview">
+            <p>No favourites yet. <a href="#tab-explore">Explore products</a></p>
+          </div>
+        </section>
         <!-- Settings
         <div class="profile-section">
           <div class="section-header">
