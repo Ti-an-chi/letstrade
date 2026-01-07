@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONTROPP - Become a Seller</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Seller Signup Specific Styles */
+        .seller-signup-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .signup-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .signup-header h1 {
+            font-size: 28px;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+        
+        .signup-header p {
+            color: var(--hash);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .signup-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .signup-progress::before {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--border);
+            z-index: 1;
+        }
+        
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--white);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--hash);
+            margin-bottom: 8px;
+            transition: all 0.3s;
+        }
+        
+        .progress-step.active .step-circle {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+            color: var(--white);
+        }
+        
+        .progress-step.completed .step-circle {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .step-label {
+            font-size: 14px;
+            color: var(--hash);
+            font-weight: 500;
+        }
+        
+        .progress-step.active .step-label {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        .signup-form {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-section {
+            margin-bottom: 32px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .form-section h3 {
+            font-size: 18px;
+            color: var(--text);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        
+        .form-label .required {
+            color: var(--error);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            color: var(--text);
+            background-color: var(--white);
+            transition: all 0.2s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 131, 224, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: var(--hash);
+            opacity: 0.7;
+        }
+        
+        .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            color: var(--text);
+            background-color: var(--white);
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+            transition: all 0.2s;
+        }
+        
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 131, 224, 0.1);
+        }
+        
+        .logo-upload {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: var(--background);
+        }
+        
+        .logo-upload:hover {
+            border-color: var(--primary);
+            background-color: rgba(52, 131, 224, 0.05);
+        }
+        
+        .logo-upload i {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+        
+        .logo-upload p {
+            color: var(--hash);
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        
+        .logo-upload .file-info {
+            font-size: 13px;
+            color: var(--hash);
+        }
+        
+        #logo-preview {
+            margin-top: 16px;
+            text-align: center;
+        }
+        
+        #logo-preview img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--white);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        .category-option {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: var(--white);
+        }
+        
+        .category-option:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .category-option.selected {
+            border-color: var(--secondary);
+            background-color: rgba(46, 204, 113, 0.1);
+        }
+        
+        .category-option i {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .category-option span {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .form-hint {
+            font-size: 13px;
+            color: var(--hash);
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .form-hint i {
+            font-size: 12px;
+        }
+        
+        .whatsapp-hint {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 16px;
+        }
+        
+        .whatsapp-hint i {
+            color: var(--secondary);
+            font-size: 18px;
+        }
+        
+        .whatsapp-hint span {
+            font-size: 13px;
+            color: var(--text);
+            flex: 1;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .btn {
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-secondary {
+            background-color: var(--background);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--border);
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+        }
+        
+        .btn-primary:disabled {
+            background-color: var(--hash);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .error-message {
+            color: var(--error);
+            font-size: 13px;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            display: none;
+        }
+        
+        .success-message {
+            background-color: rgba(46, 204, 113, 0.1);
+            border: 1px solid var(--secondary);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            margin-bottom: 24px;
+            display: none;
+        }
+        
+        .success-message i {
+            color: var(--secondary);
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .success-message p {
+            color: var(--text);
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+        
+        .success-message small {
+            color: var(--hash);
+            font-size: 13px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .seller-signup-container {
+                padding: 16px;
+            }
+            
+            .signup-form {
+                padding: 24px;
+            }
+            
+            .signup-progress {
+                margin-bottom: 32px;
+            }
+            
+            .step-label {
+                font-size: 12px;
+            }
+            
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .signup-header h1 {
+                font-size: 24px;
+            }
+            
+            .signup-form {
+                padding: 20px;
+            }
+            
+            .category-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-container">
+            <a href="dashboard.html" class="logo">ONTROPP</a>
+            <div class="header-actions">
+                <!-- Empty for signup page -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="seller-signup-container">
+        <!-- Progress Steps -->
+        <div class="signup-progress">
+            <div class="progress-step active" id="step1">
+                <div class="step-circle">1</div>
+                <span class="step-label">Shop Details</span>
+            </div>
+            <div class="progress-step" id="step2">
+                <div class="step-circle">2</div>
+                <span class="step-label">Contact Info</span>
+            </div>
+            <div class="progress-step" id="step3">
+                <div class="step-circle">3</div>
+                <span class="step-label">Review</span>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="signup-header">
+            <h1>Become an ONTROPP Seller</h1>
+            <p>Set up your seller profile and start reaching customers. Fill in your shop details below.</p>
+        </div>
+
+        <!-- Success Message (hidden initially) -->
+        <div class="success-message" id="success-message">
+            <i class="fas fa-check-circle"></i>
+            <p>Congratulations! Your seller account is being created.</p>
+            <small>You'll be redirected to your dashboard in a moment...</small>
+        </div>
+
+        <!-- Signup Form -->
+        <form class="signup-form" id="seller-signup-form">
+            <!-- Shop Details Section -->
+            <div class="form-section" id="section-shop">
+                <h3>Shop Details</h3>
+                
+                <div class="form-group">
+                    <label class="form-label" for="shop-name">
+                        Shop Name <span class="required">*</span>
+                    </label>
+                    <input type="text" 
+                           id="shop-name" 
+                           class="form-input" 
+                           placeholder="Enter your shop name"
+                           required>
+                    <div class="error-message" id="shop-name-error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Shop name is required</span>
+                    </div>
+                    <div class="form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        <span>This will be displayed to customers on your products</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="shop-logo">
+                        Shop Logo
+                    </label>
+                    <div class="logo-upload" id="logo-upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click to upload shop logo</p>
+                        <div class="file-info">Recommended: 500x500px, PNG or JPG</div>
+                    </div>
+                    <input type="file" 
+                           id="shop-logo" 
+                           accept="image/*" 
+                           style="display: none;">
+                    <div id="logo-preview"></div>
+                    <div class="error-message" id="logo-error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Logo must be less than 2MB</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="shop-bio">
+                        Shop Bio <span class="required">*</span>
+                    </label>
+                    <textarea id="shop-bio" 
+                              class="form-textarea" 
+                              placeholder="Tell customers about your shop, your products, and what makes you unique..."
+                              maxlength="500"
+                              required></textarea>
+                    <div class="form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        <span><span id="bio-count">0</span>/500 characters</span>
+                    </div>
+                    <div class="error-message" id="bio-error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Bio is required (minimum 50 characters)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Info Section (hidden initially) -->
+            <div class="form-section" id="section-contact" style="display: none;">
+                <h3>Contact Information</h3>
+                
+                <div class="form-group">
+                    <label class="form-label" for="whatsapp-number">
+                        WhatsApp Number <span class="required">*</span>
+                    </label>
+                    <input type="tel" 
+                           id="whatsapp-number" 
+                           class="form-input" 
+                           placeholder="e.g., 08012345678"
+                           pattern="[0-9]{11}"
+                           required>
+                    <div class="error-message" id="whatsapp-error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Valid Nigerian phone number required (11 digits)</span>
+                    </div>
+                    <div class="whatsapp-hint">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Customers will contact you via WhatsApp for orders and inquiries</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        Primary Category <span class="required">*</span>
+                    </label>
+                    <div class="category-grid" id="category-options">
+                        <!-- Categories will be loaded via JavaScript -->
+                    </div>
+                    <div class="error-message" id="category-error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Please select a category</span>
+                    </div>
+                    <div class="form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        <span>This helps customers find your products</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Section (hidden initially) -->
+            <div class="form-section" id="section-review" style="display: none;">
+                <h3>Review Your Information</h3>
+                
+                <div class="review-summary">
+                    <div class="review-item">
+                        <strong>Shop Name:</strong>
+                        <span id="review-shop-name">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Shop Bio:</strong>
+                        <span id="review-shop-bio">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>WhatsApp:</strong>
+                        <span id="review-whatsapp">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Category:</strong>
+                        <span id="review-category">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Logo:</strong>
+                        <span id="review-logo">Not uploaded</span>
+                    </div>
+                </div>
+                
+                <div class="form-hint" style="margin-top: 20px;">
+                    <i class="fas fa-check-circle" style="color: var(--secondary);"></i>
+                    <span>Review your information before submitting. You can edit any section by going back.</span>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="btn-back" style="display: none;">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button type="button" class="btn btn-primary" id="btn-next">
+                    Continue <i class="fas fa-arrow-right"></i>
+                </button>
+                <button type="submit" class="btn btn-primary" id="btn-submit" style="display: none;">
+                    <i class="fas fa-check"></i> Complete Setup
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <p class="footer-text">© 2023 ONTROPP. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Terms</a>
+                <a href="#" class="footer-link">Privacy</a>
+                <a href="#" class="footer-link">Help</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script type="module" src="sellerSignup.js"></script>

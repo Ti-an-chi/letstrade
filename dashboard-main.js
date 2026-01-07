@@ -7,12 +7,6 @@ import { initProfileTab } from './profile.js';
 
 // Global state
 let currentUser = null;
-let cachedData = {
-  home: { loaded: false, products: [], categories: [] },
-  explore: { loaded: false, products: [], filteredProducts: [] },
-  favourites: { loaded: false, items: [] },
-  profile: { loaded: false, data: null }
-};
 let searchTimeout = null;
 
 // Initialize dashboard
@@ -50,10 +44,8 @@ async function loadUserData() {
     if (userData?.role === 'seller') {
       updateSellerDashboard(userData);
     }
-    cachedData.profile.data = userData;
-    cachedData.profile.loaded = true;
   } catch (error) {
-    console.error('Failed to load user data:', error);
+    console.error(`Failed to load user data:  ${error}`);
     // Use default user data as fallback
     currentUser = {
       username: 'User',
@@ -178,9 +170,7 @@ function switchToTab(tabId) {
 }
 
 async function loadTabContent(tabId) {
-  if (cachedData[tabId.replace('tab-', '')]?.loaded) {
-    return; // Content already loaded
-  }
+  // Cache check removed - tab will load every time
   
   try {
     switch(tabId) {
@@ -198,7 +188,7 @@ async function loadTabContent(tabId) {
         break;
     }
     
-    cachedData[tabId.replace('tab-', '')].loaded = true;
+    // Cache setting removed
     
   } catch (error) {
     console.error(`Failed to load ${tabId}:`, error);
@@ -239,14 +229,7 @@ function setupGlobalEventListeners() {
       dropdown.style.display = 'none';
       
       if (confirm('Ready to start your seller journey? You\'ll be able to list products and grow your business.')) {
-        /*API.becomeSeller().then(response => {
-          showSuccessMessage('Welcome to the seller community!');*/
-          // Refresh user data
-          window.location.href = sellerSignup.html;
-          //loadUserData();
-        //}).catch(error => {
-          //console.error('Failed to become seller:', error);
-          //alert('Failed to setup seller account. Please try again.');});
+          location.href = 'sellerSignup.html';
       }
     });
   }
@@ -286,7 +269,6 @@ function showErrorMessage(message) {
 // Export for other modules
 export { 
   currentUser, 
-  cachedData, 
   searchTimeout,
   formatPrice,
   showSuccessMessage,

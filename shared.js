@@ -26,7 +26,7 @@ export function renderProducts(products, containerId, type = 'product') {
           <i class="fas fa-store"></i>
         </div>
         <div class="seller-details">
-          <h4 class="seller-name">${product.seller || 'Seller'}</h4>
+          <h4 class="seller-name">${product.seller.shop_name || 'Seller'}</h4>
           <span class="seller-rating">
             <i class="fas fa-star"></i> ${product.rating || '4.5'}
           </span>

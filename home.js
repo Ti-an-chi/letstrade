@@ -9,7 +9,7 @@ export async function initHomeTab() {
     renderCategories(categories);
     
     // Load recommended products
-    const products = await API.getRecommendedProducts();
+    const products = await API.getRecommendedProducts(1, 8);
     renderProducts(products, 'recommended-list', 'recommended');
     
     // Update empty state

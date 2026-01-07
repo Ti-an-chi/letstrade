@@ -14,9 +14,6 @@ async function loadFavouritesContent() {
   try {
     const favourites = await API.getFavourites();
     
-    // Store in session
-    sessionStorage.setItem('userFavourites', JSON.stringify(favourites));
-    
     renderFavourites(favourites);
     updateFavouritesCount(favourites.length);
     
@@ -26,41 +23,6 @@ async function loadFavouritesContent() {
   } catch (error) {
     console.error('Failed to load favourites:', error);
     alert('Failed to load favourites.');
-  }
-}
-
-function setupFavouritesTabs() {
-  const favTabs = document.querySelectorAll('.fav-tab');
-  const favTabContents = document.querySelectorAll('.fav-tab-content');
-  
-  favTabs.forEach(tab => {
-    tab.addEventListener('click', function() {
-      const tabId = this.dataset.tab;
-      
-      // Update active tab
-      favTabs.forEach(t => t.classList.remove('active'));
-      this.classList.add('active');
-      
-      // Show selected tab content
-      favTabContents.forEach(content => {
-        content.classList.remove('active');
-      });
-      document.getElementById(`fav-${tabId}`).classList.add('active');
-      
-      // Load content if not loaded
-      if (tabId === 'sellers') {
-        loadFollowedSellers();
-      }
-    });
-  });
-}
-
-async function loadFollowedSellers() {
-  try {
-    const sellers = await API.getFollowedSellers();
-    renderFollowedSellers(sellers);
-  } catch (error) {
-    console.error('Failed to load followed sellers:', error);
   }
 }
 
@@ -89,7 +51,7 @@ function renderFavourites(favourites) {
           <i class="fas fa-store"></i>
         </div>
         <div class="seller-details">
-          <h4 class="seller-name">${item.seller}</h4>
+          <h4 class="seller-name">${item.seller.shop_name}</h4>
           <span class="seller-rating">
             <i class="fas fa-star"></i> ${item.rating || '4.5'}
           </span>
@@ -133,6 +95,41 @@ function renderFavourites(favourites) {
   });
   
   setupFavouriteItemInteractions();
+}
+
+function setupFavouritesTabs() {
+  const favTabs = document.querySelectorAll('.fav-tab');
+  const favTabContents = document.querySelectorAll('.fav-tab-content');
+  
+  favTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      const tabId = this.dataset.tab;
+      
+      // Update active tab
+      favTabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Show selected tab content
+      favTabContents.forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById(`fav-${tabId}`).classList.add('active');
+      
+      // Load content if not loaded
+      if (tabId === 'sellers') {
+        loadFollowedSellers();
+      }
+    });
+  });
+}
+
+async function loadFollowedSellers() {
+  try {
+    const sellers = await API.getFollowedSellers();
+    renderFollowedSellers(sellers);
+  } catch (error) {
+    console.error('Failed to load followed sellers:', error);
+  }
 }
 
 function renderFollowedSellers(sellers) {
@@ -192,16 +189,16 @@ function setupFavouritesInteractions() {
   const clearAllBtn = document.getElementById('clear-all-btn');
   if (clearAllBtn) {
     clearAllBtn.addEventListener('click', async function() {
-      const favourites = JSON.parse(sessionStorage.getItem('userFavourites') || '[]');
+/*    const favourites = JSON.parse(sessionStorage.getItem('userFavourites') || '[]');
       if (favourites.length === 0) {
         alert('No items to clear');
         return;
-      }
+      }*/
       
       if (confirm('Are you sure you want to clear all favourites?')) {
         try {
           await API.clearAllFavourites();
-          sessionStorage.removeItem('userFavourites');
+          //sessionStorage.removeItem('userFavourites');
           renderFavourites([]);
           updateFavouritesCount(0);
           this.closest('.favourites-actions').style.display = 'none';

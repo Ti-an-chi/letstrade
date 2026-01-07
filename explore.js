@@ -35,94 +35,60 @@ function setupExploreUI() {
 }
 
 function setupExploreInteractions() {
-  // Search input with debounce
+  /* ---------- SEARCH ---------- */
   const searchInput = document.getElementById('explore-search-input');
   if (searchInput) {
-    let searchTimeout;
-    searchInput.addEventListener('input', function() {
-      clearTimeout(searchTimeout);
-      searchTimeout = setTimeout(() => {
-        const query = this.value.trim();
-        if (query) {
-          pagination.search(query, 1); // Reset to page 1 on new search
-        } else {
-          // Remove search filter if empty
-          const filters = { ...pagination.currentFilters };
-          delete filters.search;
-          pagination.loadPage(1, filters);
-        }
+    let timeout;
+    searchInput.addEventListener('input', function () {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        pagination.search(this.value.trim());
       }, 500);
     });
   }
-  
-  // Category filters
-  const filterChips = document.querySelectorAll('.filter-chips .chip');
-  filterChips.forEach(chip => {
-    chip.addEventListener('click', function() {
-      filterChips.forEach(c => c.classList.remove('active'));
+
+  /* ---------- CATEGORY ---------- */
+  const chips = document.querySelectorAll('.filter-chips .chip');
+  chips.forEach(chip => {
+    chip.addEventListener('click', function () {
+      chips.forEach(c => c.classList.remove('active'));
       this.classList.add('active');
-      
-      const category = this.dataset.category;
-      const filters = { ...pagination.currentFilters };
-      
-      if (category === 'all') {
-        delete filters.category;
-      } else {
-        filters.category = category;
-      }
-      
-      pagination.loadPage(1, filters); // Reset to page 1
+
+      pagination.filterByCategory(this.dataset.category);
     });
   });
-  
-  // Price filter
+
+  /* ---------- PRICE ---------- */
   const applyPriceBtn = document.getElementById('apply-price-filter');
   if (applyPriceBtn) {
     applyPriceBtn.addEventListener('click', () => {
-      const minPriceInput = document.getElementById('min-price');
-      const maxPriceInput = document.getElementById('max-price');
-      
-      const filters = { ...pagination.currentFilters };
-      
-      if (minPriceInput && minPriceInput.value) {
-        filters.minPrice = parseFloat(minPriceInput.value);
-      } else {
-        delete filters.minPrice;
-      }
-      
-      if (maxPriceInput && maxPriceInput.value) {
-        filters.maxPrice = parseFloat(maxPriceInput.value);
-      } else {
-        delete filters.maxPrice;
-      }
-      
-      pagination.loadPage(1, filters); // Reset to page 1
-    });
-  }
-  
-  // Filter toggle
-  const filterToggleBtn = document.getElementById('filter-toggle-btn');
-  const filterPanel = document.getElementById('filter-panel');
-  const closeFilterBtn = document.getElementById('close-filter-btn');
+      const min = document.getElementById('min-price')?.value;
+      const max = document.getElementById('max-price')?.value;
 
-  if (filterToggleBtn && filterPanel) {
-    filterToggleBtn.addEventListener('click', function() {
-      filterPanel.style.display = filterPanel.style.display === 'block' ? 'none' : 'block';
+      pagination.filterByPrice(min, max);
     });
   }
 
-  if (closeFilterBtn && filterPanel) {
-    closeFilterBtn.addEventListener('click', function() {
-      filterPanel.style.display = 'none';
-    });
-  }
-  
-  // Close filter when clicking outside (mobile)
-  document.addEventListener('click', function(e) {
-    if (filterPanel && filterPanel.style.display === 'block' && 
-        !e.target.closest('.filter-panel') && 
-        !e.target.closest('.filter-toggle-btn')) {
-      filterPanel.style.display = 'none';
+  /* ---------- FILTER PANEL UI ---------- */
+  const toggleBtn = document.getElementById('filter-toggle-btn');
+  const panel = document.getElementById('filter-panel');
+  const closeBtn = document.getElementById('close-filter-btn');
+
+  toggleBtn?.addEventListener('click', () => {
+    panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    panel.style.display = 'none';
+  });
+
+  document.addEventListener('click', (e) => {
+    if (
+      panel?.style.display === 'block' &&
+      !e.target.closest('.filter-panel') &&
+      !e.target.closest('#filter-toggle-btn')
+    ) {
+      panel.style.display = 'none';
     }
   });
 }

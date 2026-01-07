@@ -166,7 +166,7 @@ signupForm.addEventListener('submit', async e => {
                 $('username').value.trim()
             );
             
-            if (!response.ok) throw new Error(response.message || 'Signup failed');
+            if (!response.success) throw new Error(response.message || 'Signup failed');
             
             pendingEmail = email;
             localStorage.setItem('pendingSignupEmail', email);
@@ -176,7 +176,7 @@ signupForm.addEventListener('submit', async e => {
         } else if (mode === 'signin') {
             // Direct login
             const response = await window.API.login(email, pass);
-            if (!response.ok) throw new Error(response.message || 'Login failed');
+            if (!response.success) throw new Error(response.message || 'Login failed');
             
             window.API.setTokens(response);
             location.href = 'dashboard.html';
@@ -209,7 +209,7 @@ verifyBtn.addEventListener('click', async () => {
     
     try {
         const response = await window.API.verifyOtp(pendingEmail, code);
-        if (!response.ok) throw new Error(response.message || 'Invalid code');
+        if (!response.success) throw new Error(response.message || 'Invalid code');
         
         // Success! Store tokens and redirect
         window.API.setTokens(response);
@@ -237,7 +237,7 @@ resendBtn.addEventListener('click', async () => {
     
     try {
         const response = await window.API.resendOtp(pendingEmail);
-        if (!response.ok) throw new Error(response.message || 'Failed to resend');
+        if (!response.success) throw new Error(response.message || 'Failed to resend');
         
         showMessage('New code sent! Check your email.', 'success', 'verify');
     } catch (err) {
@@ -274,3 +274,19 @@ document.getElementById('toLogin2').addEventListener('click', (e) => {
         window.API.clearTokens();
     }
 })();
+
+
+/*========= Session Helper =========*/
+window.UserSession = {
+  setCurrentUser(user) {
+    localStorage.setItem('ontrop_user', JSON.stringify(user));
+  },
+  getCurrentUser() {
+    const user = localStorage.getItem('ontrop_user');
+    return user ? JSON.parse(user) : null;
+  },
+  clear() {
+    localStorage.removeItem('ontrop_user');
+  }
+};
+
