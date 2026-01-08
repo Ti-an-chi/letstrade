@@ -39,6 +39,7 @@ async function loadUserData() {
   try {
     const userData = await API.getUserData();
     currentUser = userData;
+    localstorage.stetItem('userData', userData);
     updateUserUI(userData);
     
     if (userData?.role === 'seller') {
