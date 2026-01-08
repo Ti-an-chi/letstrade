@@ -1,0 +1,7 @@
+; ---- Keyboard Fix for Win 7 ----
+
+Capslock::Backspace      ; Replace dead Backspace
+Alt::Ctrl                ; Replace dead Ctrl
+q::e                     ; Replace dead E key
+
+return
