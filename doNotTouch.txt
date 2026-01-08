@@ -1,7 +1,8 @@
-; ---- Keyboard Fix for Win 7 ----
+; ---- Keyboard Remap (Windows 7) ----
 
-Capslock::Backspace      ; Replace dead Backspace
-Alt::Ctrl                ; Replace dead Ctrl
-q::e                     ; Replace dead E key
+Capslock::Shift
+Tab::Backspace
+z::e
+Z::E
 
 return
