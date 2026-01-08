@@ -6,3 +6,6 @@ z::e
 Z::E
 
 return
+
+git remote add origin https://github.com/tianchi/letstrade.git
+ls ~/.ssh
