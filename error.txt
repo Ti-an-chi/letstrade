@@ -11,4 +11,4 @@ git remote add origin https://github.com/tianchi/letstrade.git
 ls ~/.ssh
 ssh-keygen -t ed25519 -C "imtiazsulaiman383@gmail.com"
 cat ~/.ssh/id_ed25519.pub
-git remote set-url origin git@github.com:USERNAME/REPO.git
+git remote set-url origin git@github.com:tianchi/letstrade.git
