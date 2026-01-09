@@ -12,3 +12,5 @@ ls ~/.ssh
 ssh-keygen -t ed25519 -C "imtiazsulaiman383@gmail.com"
 cat ~/.ssh/id_ed25519.pub
 git remote set-url origin git@github.com:tianchi/letstrade.git
+git status
+git diff
