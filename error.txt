@@ -4,6 +4,7 @@ Capslock::Shift
 Tab::Backspace
 z::e
 Z::E
+}::{
 
 return
 
