@@ -4,7 +4,7 @@ Capslock::Shift
 Tab::Backspace
 z::e
 Z::E
-}::{
+{}}::{{}  ; This is the corrected line
 
 return
 
