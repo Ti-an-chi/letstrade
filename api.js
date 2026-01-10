@@ -284,10 +284,13 @@ const API = {
     const data = await resp.json();
     return { data }; // This matches your usage: const { data } = await window.API.ping();
   },
-  
-  imageURL: 'https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload',
+
   COLUD_NAME: 'dxptlb7rx',
-  UPLOAD_PRESET: 'seller_logo_unsigned',
+  imageURL: `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+
+  async uploadLogo(formData) {
+    const res = await fetch(`${imageURL}`)
+  }
   
   
 };
