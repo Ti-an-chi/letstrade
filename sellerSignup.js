@@ -68,6 +68,8 @@ async function setupCategories() {
 }
 
 function setupLogoUpload() {
+  let sellerLogoUrl = null;
+
   const logoUploadArea = document.getElementById('logoUploadArea');
   const logoUploadBtn = document.getElementById('logoUploadBtn');
   const logoFileInput = document.getElementById('logoFileInput');
@@ -108,13 +110,7 @@ function setupLogoUpload() {
       return;
     }
     
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      logoPreviewImage.src = e.target.result;
-      logoUploadContent.style.display = 'none';
-      logoPreview.style.display = 'flex';
-    };
-    reader.readAsDataURL(file);
+    uploadSellerLogo(file);
   });
   
   logoUploadArea.addEventListener('dragover', (e) => {
@@ -144,11 +140,36 @@ function setupLogoUpload() {
   });
 }
 
-function logoUploadNew() {
+async function uploadSellerLogo(file) {
   const COLUD_NAME = 'dxptlb7rx';
   const UPLOAD_PRESET = 'seller_logo_unsigned';
 
+  const logoPreviewImage = document.getElementById('logoPreviewImage');
+  const logoUploadContent = document.getElementById('logoUploadContent');
+  const logoPreview = document.getElementById('logoPreview');
 
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', UPLOAD_PRESET);
+  formData.append('folder', 'sellers/logos');
+
+  // loading state 
+  logoPreviewImage.src = 'images/loading.gif';
+  loadUploadContent.style.display = 'none';
+  logoPreview.style.display = 'flex';
+  
+  try {
+    const res = await API.uploadLogo(formData);
+    sellerLogoUrl = res.secure_url;
+    logoPreviewImage.src = sellerLogoUrl;
+  } catch (err) {
+    alert('Logo upload failed. try again');
+    console.error(err);
+
+    sellerLogoUrl = null;
+    logoUploadContent.style.display = 'block';
+    logoPreview.style.display = 'none';
+  }
 }
 
 function setupFormSubmission() {
