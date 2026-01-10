@@ -18,6 +18,8 @@ const API = {
     localStorage.removeItem('pendingSignupEmail');
   },
   
+  
+  
   /*---------- Core Fetch with Auto-Refresh ----------*/
 /*========= API GATEWAY – api.js (Fixed) =========*/
   
@@ -281,7 +283,13 @@ const API = {
     const resp = await fetch(`${this.baseURL}/ping`);
     const data = await resp.json();
     return { data }; // This matches your usage: const { data } = await window.API.ping();
-  }
+  },
+  
+  imageURL: 'https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload',
+  COLUD_NAME: 'dxptlb7rx',
+  UPLOAD_PRESET: 'seller_logo_unsigned',
+  
+  
 };
 
 // Export for module systems

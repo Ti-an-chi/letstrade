@@ -141,9 +141,6 @@ function setupLogoUpload() {
 }
 
 async function uploadSellerLogo(file) {
-  const COLUD_NAME = 'dxptlb7rx';
-  const UPLOAD_PRESET = 'seller_logo_unsigned';
-
   const logoPreviewImage = document.getElementById('logoPreviewImage');
   const logoUploadContent = document.getElementById('logoUploadContent');
   const logoPreview = document.getElementById('logoPreview');
