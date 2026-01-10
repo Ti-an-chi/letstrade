@@ -144,6 +144,13 @@ function setupLogoUpload() {
   });
 }
 
+function logoUploadNew() {
+  const COLUD_NAME = 'dxptlb7rx';
+  const UPLOAD_PRESET = 'seller_logo_unsigned';
+
+
+}
+
 function setupFormSubmission() {
   const form = document.getElementById('sellerSignupForm');
   const submitBtn = document.getElementById('submitBtn');
