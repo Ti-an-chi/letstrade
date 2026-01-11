@@ -207,7 +207,7 @@ function setupGlobalEventListeners() {
   const kebabBtn = document.getElementById('profile-kebab-btn');
   const dropdown = document.getElementById('profile-dropdown');
   const setupSellerBtn = document.getElementById('setup-seller-btn');
-
+  
   if (kebabBtn && dropdown) {
     kebabBtn.addEventListener('click', function(e) {
       e.stopPropagation();
@@ -233,6 +233,61 @@ function setupGlobalEventListeners() {
           location.href = 'sellerSignup.html';
       }
     });
+  }
+  
+  const editAvatarInput = document.getElementById("edit-avatar-input");
+  
+  const editAvatarBtn = document.getElementById('edit-avatar-btn');
+
+  if (editAvatarBtn && editAvatarInput) {
+    editAvatarBtn.addEventListener('click', () => {
+      editAvatarInput.click();
+    });
+  }
+  if (editAvatarInput) {
+    editAvatarInput.addEventListener('change', function(e) {
+      const file = this.files[0];
+      if (!file) return;
+    
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file (JPG, PNG, etc.)');
+        return;
+      }
+    
+      if (file.size > 1 * 1024 * 1024) {
+        alert('Image file must be less than 1MB');
+        return;
+      }
+    
+      uploadProfileImage(file);
+    });
+  }
+}
+
+async function uploadProfileImage(file) {
+  const UPLOAD_PRESET = 'seller_logo_unsigned';
+  
+  const editAvatarBtn = document.getElementById('edit-avatar-btn');
+  const profileAvatarImage = document.getElementById('profile-avatar-img');
+  
+  const formData = new FormData();
+  formData.append('file', file)
+  formData.append('upload_preset', UPLOAD_PRESET);
+  formData.append('folder', 'users/profile');
+  
+  profileAvatarImage.src = 'https://i.gifer.com/ZZ5H.gif';     // loading state
+  
+  try {
+    const resp = await API.uploadImage(formData);
+    const profileImageURL = resp.secure_url;
+    await API.updateProfile({profileImageURL});
+    
+    profileAvatarImage.src = profileImageURL;
+  } catch (err) {
+    alert('Logo upload failed. try again');
+    console.error(err);
+
+    profileAvatarImage.src = 'https://ui-avatars.com/api/?name=User&background=3483E0&color=fff';
   }
 }
 

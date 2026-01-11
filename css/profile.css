@@ -48,6 +48,14 @@
   font-size: 14px;
 }
 
+.edit-avatar-input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .profile-info {
   width: 100%;
 }
@@ -189,7 +197,7 @@
   opacity: 0.9;
 }
 
-/* Become Seller Button */
+/* Become Seller Button 
 .become-seller-btn {
   width: 100%;
   background-color: var(--secondary);
