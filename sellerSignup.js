@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
   setupFormSubmission();
 });
 
+let sellerLogoUrl = null;
+
 function autoFillUserData() {
   try {
     const userData = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
@@ -68,8 +70,6 @@ async function setupCategories() {
 }
 
 function setupLogoUpload() {
-  let sellerLogoUrl = null;
-
   const logoUploadArea = document.getElementById('logoUploadArea');
   const logoUploadBtn = document.getElementById('logoUploadBtn');
   const logoFileInput = document.getElementById('logoFileInput');
@@ -153,12 +153,13 @@ async function uploadSellerLogo(file) {
   formData.append('folder', 'sellers/logos');
 
   // loading state 
-  logoPreviewImage.src = 'images/loading.gif';
-  loadUploadContent.style.display = 'none';
+  logoPreviewImage.src = 'https://i.gifer.com/ZZ5H.gif';
+  logoUploadContent.style.display = 'none';
   logoPreview.style.display = 'flex';
   
   try {
-    const res = await API.uploadLogo(formData);
+    const res = await API.uploadImage(formData);
+
     sellerLogoUrl = res.secure_url;
     logoPreviewImage.src = sellerLogoUrl;
   } catch (err) {
@@ -192,11 +193,7 @@ function setupFormSubmission() {
       return;
     }
     
-    const logoFileInput = document.getElementById('logoFileInput');
-    if (logoFileInput.files[0]) {
-      formData.hasLogo = true;
-      formData.logoFileName = logoFileInput.files[0].name;
-    }
+    formData.logoUrl = sellerLogoUrl;
     
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';

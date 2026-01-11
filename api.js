@@ -135,9 +135,6 @@ const API = {
     return { data: response };
   },
   
-// Export/attach to window
-
-  
   /*----------------- SELLER DATA ----------------*/
   async getSellerData() {
     return this._fetch('/seller/stats');
@@ -285,13 +282,22 @@ const API = {
     return { data }; // This matches your usage: const { data } = await window.API.ping();
   },
 
-  COLUD_NAME: 'dxptlb7rx',
-  imageURL: `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+  /* ---------- IMAGE UPLOAD ---------- */
+  CLOUD_NAME: `dxptlb7rx`,
+  get imageURL () {
+    return `https://api.cloudinary.com/v1_1/${this.CLOUD_NAME}/image/upload`
+  },
 
-  async uploadLogo(formData) {
-    const res = await fetch(`${imageURL}`)
+  async uploadImage(formData) {
+    const response = await fetch(this.imageURL, {
+      method: 'POST',
+      body: formData
+    });
+    if (!response.ok) {
+      throw new Error('upload failed');
+    }
+    return await response.json();
   }
-  
   
 };
 
