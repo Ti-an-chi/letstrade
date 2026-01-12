@@ -39,7 +39,7 @@ async function loadUserData() {
   try {
     const userData = await API.getUserData();
     currentUser = userData;
-    localstorage.stetItem('userData', userData);
+    localStorage.setItem('userData', userData);
     updateUserUI(userData);
     
     if (userData?.role === 'seller') {
@@ -280,7 +280,7 @@ async function uploadProfileImage(file) {
   try {
     const resp = await API.uploadImage(formData);
     const profileImageURL = resp.secure_url;
-    await API.updateProfile({profileImageURL});
+    await API.updateProfile({avatar_url: profileImageURL});
     
     profileAvatarImage.src = profileImageURL;
   } catch (err) {
