@@ -50,7 +50,7 @@ function renderCategories(categories) {
         </div>
         <div class="category-details">
           <h3 class="category-title">${category.name}</h3>
-          <p class="category-count">${category.productCount} products</p>
+          <p class="category-count">${category.sellerCount} sellers</p>
         </div>
       </div>
       <div class="category-arrow">

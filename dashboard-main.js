@@ -63,6 +63,7 @@ function updateUserUI(userData) {
   const userNameEl = document.getElementById('user-name');
   const userEmailEl = document.getElementById('user-email');
   const userAvatarEl = document.getElementById('user-avatar-img');
+  const profileAvatarImage = document.getElementById('profile-avatar-img');
   const profileNameEl = document.getElementById('profile-display-name');
   const profileEmailEl = document.getElementById('profile-display-email');
   const profileRoleEl = document.getElementById('profile-role');
@@ -74,8 +75,11 @@ function updateUserUI(userData) {
   if (profileRoleEl) profileRoleEl.textContent = userData.isSeller ? 'Seller' : 'Buyer';
   
   // Update avatar if available
-  if (userAvatarEl && userData.avatarUrl) {
-    userAvatarEl.src = userData.avatarUrl;
+  if (userAvatarEl && userData.avatar_url) {
+    userAvatarEl.src = userData.avatar_url;
+  }
+  if (profileAvatarImage && userData.avatar_url) {
+    profileAvatarImage.src = userData.avatar_url;
   }
   
   // Update buyer stats
@@ -254,7 +258,7 @@ function setupGlobalEventListeners() {
         return;
       }
     
-      if (file.size > 1 * 1024 * 1024) {
+      if (file.size > 2 * 1024 * 1024) {
         alert('Image file must be less than 1MB');
         return;
       }
