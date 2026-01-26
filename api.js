@@ -44,12 +44,13 @@ const API = {
         msg = data.message || msg;
       } catch {}
       
-      if ((msg === 'Token expired' || resp.status === 401) && !_retry) {
+      if ((msg === 'Invalid or expired token' || resp.status === 401) && !_retry) {
         try {
           await this.refresh();
           return await this._fetch(path, options, true);
         } catch {
           this.clearTokens();
+          location.href = 'signup.html';
           throw new Error('Session expired. Please login again.');
         }
       }
@@ -105,8 +106,11 @@ const API = {
     
     const response = await this._fetch('/auth/refresh', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ token: refreshToken })
-    });
+    }, true);
     if (response.success) {
       localStorage.setItem('ontrop_token', response.accessToken);
     }
@@ -173,8 +177,8 @@ const API = {
   
   async getRecommendedProducts(page = 1, limit = 20) {
     const params = new URLSearchParams({ page: page.toString(), limit: limit.toString() });
-    const response = this._fetch(`/products/recommended?${params}`);
-    return response.data
+    const response = await this._fetch(`/products/recommended?${params}`);
+    return response.data;
   },
   
   async getFavourites(page = 1, limit = 20, search = '') {

@@ -1,4 +1,3 @@
-
 import API from './api.js';
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -105,8 +104,8 @@ function setupLogoUpload() {
       return;
     }
     
-    if (file.size > 1 * 1024 * 1024) {
-      alert('Image file must be less than 1MB');
+    if (file.size > 2 * 1024 * 1024) {
+      alert('Image file must be less than 2MB');
       return;
     }
     
@@ -184,11 +183,11 @@ function setupFormSubmission() {
     const formData = {
       shopName: document.getElementById('shopName').value.trim(),
       shopBio: document.getElementById('shopBio').value.trim(),
-      whatsappNumber: document.getElementById('whatsappNumber').value.trim(),
+      whatsapp_number: document.getElementById('whatsappNumber').value.trim(),
       category: document.getElementById('selectedCategory').value
     };
     
-    if (!formData.shopName || !formData.shopBio || !formData.whatsappNumber || !formData.category) {
+    if (!formData.shopName || !formData.shopBio || !formData.whatsapp_number || !formData.category) {
       alert('Please fill in all required fields');
       return;
     }
@@ -200,7 +199,7 @@ function setupFormSubmission() {
     submitBtn.disabled = true;
     
     try {
-      const response = await API.becomeSeller(formData);
+      const response = await API.startSelling(formData);
       alert('Congratulations! You are now a seller on ONTROPP.');
       window.location.href = 'dashboard.html';
     } catch (error) {
