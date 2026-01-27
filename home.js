@@ -17,11 +17,14 @@ export async function initHomeTab() {
     if (emptyRecEl) {
       emptyRecEl.style.display = products.length === 0 ? 'block' : 'none';
     }
-    
+
     // Load seller products if user is seller
-    const user = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
-    if (user?.isSeller) {
-      const sellerProducts = await API.getSellerProducts();
+    const userData = localStorage.getItem('userData');
+    let user = null;
+    user = userData ? JSON.parse(userData) : null;
+    if (user?.role === 'seller') {
+      const resp = await API.getSellerProducts();
+      const sellerProducts = resp.products && [];
       renderProducts(sellerProducts, 'seller-products-grid', 'seller');
     }
     

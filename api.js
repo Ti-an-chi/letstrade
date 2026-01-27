@@ -149,9 +149,10 @@ const API = {
     return this._fetch(`/seller/products?${params}`);
   },
   
-  async getSellerProducts(sellerId, page = 1, limit = 20) {
+  async getSellerProducts(sellerId = undefined, page = 1, limit = 20) {
     const params = new URLSearchParams({ page, limit });
-    return this._fetch(`/products/seller/${sellerId}?${params}`);
+    if (sellerId) return await this._fetch(`/products/seller/${sellerId}?${params}`);
+    return await this._fetch(`/seller/products?${params}`);
   },
   
   /* ---------------- PRODUCT DATA --------------- */
@@ -175,7 +176,7 @@ const API = {
     return this._fetch(`/products/search?${params}`);
   },
   
-  async getRecommendedProducts(page = 1, limit = 20) {
+  async getRecommendedProducts(page = 1, limit = 8) {
     const params = new URLSearchParams({ page: page.toString(), limit: limit.toString() });
     const response = await this._fetch(`/products/recommended?${params}`);
     return response.data;

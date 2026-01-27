@@ -39,7 +39,7 @@ async function loadUserData() {
   try {
     const userData = await API.getUserData();
     currentUser = userData;
-    localStorage.setItem('userData', userData);
+    localStorage.setItem('userData', JSON.stringify(userData));
     updateUserUI(userData);
     
     if (userData?.role === 'seller') {
@@ -72,7 +72,7 @@ function updateUserUI(userData) {
   if (userEmailEl) userEmailEl.textContent = userData.email;
   if (profileNameEl) profileNameEl.textContent = userData.username;
   if (profileEmailEl) profileEmailEl.textContent = userData.email;
-  if (profileRoleEl) profileRoleEl.textContent = userData.isSeller ? 'Seller' : 'Buyer';
+  if (profileRoleEl) profileRoleEl.textContent = userData.role === 'seller' ? 'Seller' : 'Buyer';
   
   // Update avatar if available
   if (userAvatarEl && userData.avatar_url) {
@@ -103,11 +103,10 @@ function updateSellerDashboard(userData) {
   if (sellerBoardEl) {
     sellerBoardEl.style.display = 'block';
   }
-  
   // Update seller stats
-  const profileViewsEl = document.getElementById('profile-views');
+  const profileViewsEl = document.getElementById('seller-profile-views');
   const totalOrdersEl = document.getElementById('total-orders');
-  
+
   if (profileViewsEl) profileViewsEl.textContent = userData.profileViews || 0;
   if (totalOrdersEl) totalOrdersEl.textContent = userData.sellerOrders || 0;
   
@@ -122,6 +121,7 @@ function updateSellerDashboard(userData) {
   const becomeSellerBtn = document.getElementById('become-seller-btn');
   if (becomeSellerBtn) becomeSellerBtn.style.display = 'none';
   
+  console.log('updating seller...');
   // Hide kebab menu for sellers
   const profileActions = document.querySelector('.profile-actions');
   if (profileActions) {
@@ -211,6 +211,9 @@ function setupGlobalEventListeners() {
   const kebabBtn = document.getElementById('profile-kebab-btn');
   const dropdown = document.getElementById('profile-dropdown');
   const setupSellerBtn = document.getElementById('setup-seller-btn');
+  const editAvatarInput = document.getElementById("edit-avatar-input");
+  const editAvatarBtn = document.getElementById('edit -avatar-btn');
+  const addProductButton = document.getElementById('add-product-btn');
   
   if (kebabBtn && dropdown) {
     kebabBtn.addEventListener('click', function(e) {
@@ -239,10 +242,13 @@ function setupGlobalEventListeners() {
     });
   }
   
-  const editAvatarInput = document.getElementById("edit-avatar-input");
+  if (addProductButton) {
+    addProductButton.addEventListener('click', function(e) {
+      e.stopPropagation();
+      location.href = 'upload.html';
+    });
+  }
   
-  const editAvatarBtn = document.getElementById('edit-avatar-btn');
-
   if (editAvatarBtn && editAvatarInput) {
     editAvatarBtn.addEventListener('click', () => {
       editAvatarInput.click();
