@@ -102,13 +102,12 @@ async function uploadProductImage(file) {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('upload_preset', UPLOAD_PRESET);
-  formData.append('folder', 'products/images'); // Different folder structure
+  formData.append('folder', 'products/images'); 
   
-  // Add placeholder with loading state immediately
   const tempId = Date.now() + Math.random();
   productImageUrls.push({
     id: tempId,
-    url: 'https://i.gifer.com/ZZ5H.gif', // Loading spinner
+    url: 'https://i.gifer.com/ZZ5H.gif',
     status: 'uploading'
   });
   updateImagePreview();
