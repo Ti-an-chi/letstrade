@@ -97,7 +97,7 @@ function setupImageUpload() {
 
 // New function - mirrors uploadSellerLogo exactly but for products
 async function uploadProductImage(file) {
-  const UPLOAD_PRESET = 'product_images_unsigned'; // Different preset for products
+  const UPLOAD_PRESET = 'product_images_unsigned'; 
   
   const formData = new FormData();
   formData.append('file', file);
