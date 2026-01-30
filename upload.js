@@ -12,8 +12,8 @@ function setupImageUpload() {
   const imageUploadArea = document.getElementById('imageUploadArea');
   const imageUploadBtn = document.getElementById('imageUploadBtn');
   const imageFileInput = document.getElementById('imageFileInput');
-  const imagePreviewGrid = document.getElementById('imagePreviewGrid');
-  const imageUploadContent = document.getElementById('imageUploadContent');
+  //const imagePreviewGrid = document.getElementById('imagePreviewGrid');
+  //const imageUploadContent = document.getElementById('imageUploadContent');
   
   if (!imageUploadArea || !imageFileInput) return;
   
@@ -113,7 +113,7 @@ async function uploadProductImage(file) {
   updateImagePreview();
   
   try {
-    const res = await API.uploadImage(formData); // Same API call as seller logo
+    const res = await API.uploadImage(formData);
     
     // Replace placeholder with actual URL
     const index = productImageUrls.findIndex(img => img.id === tempId);
@@ -189,7 +189,6 @@ function setupFormSubmission() {
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    // Filter out any still-uploading images
     const completedImages = productImageUrls
       .filter(img => img.status === 'complete')
       .map(img => img.url);
@@ -198,13 +197,15 @@ function setupFormSubmission() {
       alert('Please upload at least one product image');
       return;
     }
+    const coverImage = completedImages[0];
     
     const formData = {
       name: document.getElementById('productName').value.trim(),
       description: document.getElementById('productDescription').value.trim(),
       price: parseFloat(document.getElementById('productPrice').value),
       category: document.getElementById('productCategory').value,
-      images: completedImages // Array of Cloudinary URLs, ready for your backend
+      coverImage,
+      images: completedImages
     };
     
     // Validation
@@ -228,7 +229,7 @@ function setupFormSubmission() {
       const response = await API.createProduct(formData);
       
       alert('Product listed successfully!');
-      window.location.href = 'dashboard.html'; // Or your products page
+      window.location.href = 'dashboard.html';
     } catch (error) {
       console.error('Failed to add product:', error);
       alert(error.message || 'Failed to list product. Please try again.');
