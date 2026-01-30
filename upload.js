@@ -219,13 +219,11 @@ function setupFormSubmission() {
       return;
     }
     
-    // Loading state (same pattern as seller signup)
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Listing...';
     submitBtn.disabled = true;
     
     try {
-      // Replace with your actual product creation API call
       const response = await API.createProduct(formData);
       
       alert('Product listed successfully!');
