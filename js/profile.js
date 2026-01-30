@@ -1,12 +1,9 @@
 // profile.js - Profile tab functionality
-
-// profile.js - Updated with favourites loading
-import API from './api.js';
+import API from '../api.js';
 import { renderProducts } from './shared.js';
 
 export async function initProfileTab() {
-  // Profile is already loaded with user data
-  // Load favourites preview
+
   await loadProfileFavourites();
   
   // Setup kebab menu interactions

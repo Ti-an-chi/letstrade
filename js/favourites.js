@@ -1,5 +1,5 @@
 // favourites.js - Favourites tab functionality
-import API from './api.js';
+import API from '../api.js';
 import { renderProducts, formatPrice } from './shared.js';
 
 export async function initFavouritesTab() {

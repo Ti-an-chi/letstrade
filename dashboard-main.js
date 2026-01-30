@@ -1,9 +1,9 @@
 // dashboard-main.js - Core dashboard functionality
 import API from './api.js';
-import { initHomeTab } from './home.js';
-import { initExploreTab } from './explore.js';
-import { initFavouritesTab } from './favourites.js';
-import { initProfileTab } from './profile.js';
+import { initHomeTab } from '/js/home.js';
+import { initExploreTab } from '/js/explore.js';
+import { initFavouritesTab } from '/js/favourites.js';
+import { initProfileTab } from '/js/profile.js';
 
 // Global state
 let currentUser = null;

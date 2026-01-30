@@ -1,5 +1,5 @@
 // home.js - Home tab functionality
-import API from './api.js';
+import API from '../api.js';
 import { renderProducts } from './shared.js';
 
 export async function initHomeTab() {
