@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${category} Sellers - ONTROPP</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Simple Category Sellers Styles */
+    .category-header {
+      background: linear-gradient(135deg, var(--primary), #5aa1f3);
+      color: white;
+      padding: 32px 16px;
+      text-align: center;
+      border-radius: 0 0 20px 20px;
+      margin-bottom: 24px;
+    }
+    
+    .category-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    
+    .category-count {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+    
+    .sellers-container {
+      padding: 0 16px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .sellers-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    
+    .seller-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+    
+    .seller-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary);
+    }
+    
+    .seller-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--background);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: var(--primary);
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+    }
+    
+    .seller-info {
+      flex: 1;
+    }
+    
+    .seller-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .seller-bio {
+      font-size: 14px;
+      color: var(--hash);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    
+    .seller-stats {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+    }
+    
+    .stat {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--hash);
+    }
+    
+    .stat i {
+      color: var(--secondary);
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 48px 16px;
+      color: var(--hash);
+    }
+    
+    .empty-state i {
+      font-size: 64px;
+      margin-bottom: 16px;
+      color: var(--border);
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 48px 16px;
+      color: var(--hash);
+    }
+    
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-container">
+      <div class="logo">ONTROPP.</div>
+      <div class="header-actions">
+        <button onclick="window.history.back()" class="icon-btn" aria-label="Back">
+          <i class="fas fa-arrow-left"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Category Header -->
+  <section class="category-header" id="categoryHeader">
+    <h1 class="category-title" id="categoryTitle">Loading...</h1>
+    <p class="category-count" id="categoryCount">Loading sellers...</p>
+    <button onclick="window.history.back()" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back
+    </button>
+  </section>
+
+  <!-- Sellers List -->
+  <main class="sellers-container">
+    <div class="sellers-list" id="sellersList">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <p>Loading sellers...</p>
+      </div>
+    </div>
+    
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <i class="fas fa-store"></i>
+      <h3>No sellers in this category</h3>
+      <p>Be the first to sell in this category!</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="dashboard-footer">
+    <div class="footer-content">
+      <p class="footer-text">© 2023 ONTROPP. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script type="module">
+    import API from './api.js';
+    
+    // Get category from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryId = urlParams.get('category') || 'electronics';
+    
+    // Update page title
+    document.title = `${categoryId.charAt(0).toUpperCase() + categoryId.slice(1)} Sellers - ONTROPP`;
+    
+    // Load sellers
+    loadCategorySellers(categoryId);
+    
+    async function loadCategorySellers(category) {
+      try {
+        // Update header
+        document.getElementById('categoryTitle').textContent = 
+          category.charAt(0).toUpperCase() + category.slice(1);
+        
+        // Fetch sellers from API
+        const sellers = await API.getSellersByCategory(category);
+        
+        // Update count
+        document.getElementById('categoryCount').textContent = 
+          `${sellers.length} seller${sellers.length !== 1 ? 's' : ''}`;
+        
+        // Show empty state if no sellers
+        if (sellers.length === 0) {
+          document.getElementById('sellersList').style.display = 'none';
+          document.getElementById('emptyState').style.display = 'block';
+          return;
+        }
+        
+        // Render sellers
+        renderSellers(sellers);
+        
+      } catch (error) {
+        console.error('Failed to load sellers:', error);
+        document.getElementById('sellersList').innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Failed to load sellers</h3>
+            <p>Please try again later</p>
+          </div>
+        `;
+      }
+    }
+    
+    function renderSellers(sellers) {
+      const sellersList = document.getElementById('sellersList');
+      
+      sellersList.innerHTML = '';
+      
+      sellers.forEach(seller => {
+        const sellerCard = document.createElement('a');
+        sellerCard.href = `#`; // Will link to seller profile page
+        sellerCard.className = 'seller-card';
+        
+        sellerCard.innerHTML = `
+          <div class="seller-avatar">
+            <i class="fas fa-store"></i>
+          </div>
+          <div class="seller-info">
+            <div class="seller-name">
+              ${seller.name}
+              ${seller.isVerified ? '<i class="fas fa-check-circle" style="color: var(--secondary);"></i>' : ''}
+            </div>
+            <p class="seller-bio">${seller.bio || 'No bio available'}</p>
+            <div class="seller-stats">
+              <div class="stat">
+                <i class="fas fa-box"></i>
+                <span>${seller.productCount || 0} products</span>
+              </div>
+              <div class="stat">
+                <i class="fas fa-star"></i>
+                <span>${seller.rating || '4.5'}</span>
+              </div>
+              <div class="stat">
+                <i class="fas fa-user-friends"></i>
+                <span>${seller.followers || 0} followers</span>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        // Add click handler
+        sellerCard.addEventListener('click', (e) => {
+          e.preventDefault();
+          viewSellerProfile(seller.id);
+        });
+        
+        sellersList.appendChild(sellerCard);
+      });
+    }
+    
+    function viewSellerProfile(sellerId) {
+      // For now, just alert
+      alert(`Viewing seller profile ${sellerId}`);
+      // In production: window.location.href = `seller.html?id=${sellerId}`;
+    }
+    
+    // Add this to api.js
+    window.API = window.API || {};
+    window.API.getSellersByCategory = async function(category) {
+      // Mock data - replace with your API call
+      const mockSellers = {
+        electronics: [
+          { id: 1, name: "TechGadgets", bio: "Latest tech gadgets and accessories", productCount: 42, rating: 4.8, followers: 156, isVerified: true },
+          { id: 2, name: "MobileHub", bio: "Smartphones and tablets", productCount: 28, rating: 4.5, followers: 89, isVerified: true },
+          { id: 3, name: "AudioTech", bio: "Premium audio equipment", productCount: 35, rating: 4.7, followers: 120, isVerified: false }
+        ],
+        clothing: [
+          { id: 4, name: "FashionStyle", bio: "Trendy clothing for everyone", productCount: 65, rating: 4.6, followers: 210, isVerified: true },
+          { id: 5, name: "UrbanWear", bio: "Streetwear and casual outfits", productCount: 38, rating: 4.4, followers: 95, isVerified: false }
+        ],
+        home: [
+          { id: 6, name: "HomeEssentials", bio: "Everything for your home", productCount: 52, rating: 4.9, followers: 180, isVerified: true }
+        ],
+        beauty: [
+          { id: 7, name: "BeautyGlow", bio: "Skincare and beauty products", productCount: 41, rating: 4.7, followers: 145, isVerified: true }
+        ],
+        other: [
+          { id: 8, name: "UniqueFinds", bio: "Special and unique items", productCount: 23, rating: 4.3, followers: 67, isVerified: false }
+        ]
+      };
+      
+      // Simulate network delay
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      return mockSellers[category] || [];
+    };
+  </script>
+</body>
+</html>
