@@ -39,11 +39,12 @@ async function loadUserData() {
   try {
     const userData = await API.getUserData();
     currentUser = userData;
-    localStorage.setItem('userData', JSON.stringify(userData));
-    updateUserUI(userData);
     
-    if (userData?.role === 'seller') {
-      updateSellerDashboard(userData);
+    localStorage.setItem('userData', JSON.stringify(userData));
+    updateUserUI(currentUser);
+    
+    if (currentUser?.role === 'seller') {
+      updateSellerDashboard(currentUser);
     }
   } catch (error) {
     console.error(`Failed to load user data:  ${error}`);

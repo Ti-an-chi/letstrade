@@ -27,6 +27,7 @@ function autoFillUserData() {
 async function setupCategories() {
   try {
     const categories = await API.getCategories();
+    console.log(categories);
     const categoryGrid = document.getElementById('categoryGrid');
     
     if (!categoryGrid) return;

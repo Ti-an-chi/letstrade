@@ -139,7 +139,21 @@ const API = {
     return { data: response };
   },
   
-  /*----------------- SELLER DATA ----------------*/
+  /* ----------------- SELLER DATA ---------------- */
+  async getSellers(category='', page=1, limit=20) {
+    const params = new URLSearchParams({
+      page: page.toString(), 
+      limit: limit.toString(), 
+    });
+    
+    if (category) {
+      params.append('category', category);
+    }
+    
+    const response = await this._fetch(`/sellers?${params}`);
+    return response.data;
+  },
+
   async getSellerData() {
     return this._fetch('/seller/stats');
   },
