@@ -42,7 +42,7 @@ function renderCategories(categories) {
   
   categories.forEach(category => {
     const categoryCard = document.createElement('a');
-    categoryCard.href = '#';
+    categoryCard.href = `category-seller.html?category=${category.id}`;
     categoryCard.className = 'category-card';
     categoryCard.dataset.category = category.id;
     
@@ -61,12 +61,13 @@ function renderCategories(categories) {
       </div>
     `;
     
-    categoryCard.addEventListener('click', function(e) {
+    /*categoryCard.addEventListener('click', function(e) {
       e.preventDefault();
+      
       const event = new CustomEvent('switchTab', { detail: 'tab-explore' });
       document.dispatchEvent(event);
     });
-    
+    */
     categoriesList.appendChild(categoryCard);
   });
 }
