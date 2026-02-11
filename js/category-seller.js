@@ -115,10 +115,13 @@ function renderSellers(sellers) {
       </div>
       
       <div class="seller-actions">
-        <button class="follow-btn" data-seller-id="${seller.id}">
-          <i class="fas fa-plus"></i>
-          Follow
+        <button class="follow-btn ${seller.isFollowing ? 'following' : ''}" 
+                  data-seller-id="${seller.id}" 
+                  ${seller.isFollowing ? 'disabled' : ''}>
+          <i class="fas ${seller.isFollowing ? 'fa-check' : 'fa-plus'}"></i>
+          ${seller.isFollowing ? 'Following' : 'Follow'}
         </button>
+        
         <a href="/shop/${seller.id}" class="view-btn">
           <i class="fas fa-eye"></i>
           View Shop
@@ -128,9 +131,9 @@ function renderSellers(sellers) {
     
     sellersGrid.appendChild(sellerCard);
   });
+  setupSellerCardListeners();
 }
 
-// Separate function for event delegation setup
 function setupSellerCardListeners() {
   const sellersGrid = document.getElementById('sellersGrid');
   if (!sellersGrid) return;
@@ -156,53 +159,30 @@ function setupSellerCardListeners() {
       // Anchor will handle navigation naturally
       return;
     }
-    
-    // If the card itself was clicked (not buttons), navigate to shop
     viewSellerProfile(sellerId);
   });
 }
 
 // Handle follow/unfollow logic
 async function handleFollowSeller(sellerId, button) {
-  const isFollowing = button.textContent.includes('Unfollow');
-  const newFollowState = !isFollowing;
-  
-  // Optimistic UI update
-  updateFollowButtonUI(button, newFollowState);
-  
   try {
-    // Make API call
-    const response = await fetch(`/api/sellers/${sellerId}/follow`, {
-      method: newFollowState ? 'POST' : 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    button.disable = true;
     
-    if (!response.ok) {
-      throw new Error('Failed to update follow status');
+    const resp = await API.followSeller(sellerId);
+    
+    if (resp.success) {
+      button.innerHTML = `<i class='fas fa-check'></i> following`;
+      button.classList.add('following');
+      button.disabled = true;
+    } else {
+      alert(resp.message || 'action failed');
+      button.disabled = resp.alreadyFollowing? true : false;
     }
-    
-    // If successful, update any other UI elements if needed
-    const data = await response.json();
-    console.log('Follow status updated:', data);
-    
   } catch (error) {
     // Revert optimistic update on error
-    updateFollowButtonUI(button, isFollowing);
-    alert('Failed to update follow status. Please try again.');
+    alert(error.message || 'something went wrong');
+    button.disabled = false
     console.error('Error following seller:', error);
-  }
-}
-
-// Update button UI
-function updateFollowButtonUI(button, isFollowing) {
-  if (isFollowing) {
-    button.innerHTML = '<i class="fas fa-check"></i> Unfollow';
-    button.classList.add('following');
-  } else {
-    button.innerHTML = '<i class="fas fa-plus"></i> Follow';
-    button.classList.remove('following');
   }
 }
 
@@ -211,40 +191,3 @@ function viewSellerProfile(sellerId) {
   // Update URL without reloading if using SPA, or redirect
   window.location.href = `/shop/${sellerId}`;
 }
-
-// Usage example
-async function loadAndRenderSellers() {
-  try {
-    const response = await fetch('/api/sellers');
-    const sellers = await response.json();
-    
-    renderSellers(sellers);
-    setupSellerCardListeners(); // Setup listeners after rendering
-    
-  } catch (error) {
-    console.error('Error loading sellers:', error);
-  }
-}
-
-// Or if you prefer to keep it all in one call
-function renderSellersWithListeners(sellers) {
-  renderSellers(sellers);
-  setupSellerCardListeners();
-}
-
-function toggleFollow(button, sellerId) {
-      const isFollowing = button.classList.contains('following');
-      
-      if (isFollowing) {
-        button.classList.remove('following');
-        button.innerHTML = '<i class="fas fa-plus"></i> Follow';
-        // Call API to unfollow
-        console.log(`Unfollow seller ${sellerId}`);
-      } else {
-        button.classList.add('following');
-        button.innerHTML = '<i class="fas fa-check"></i> Following';
-        // Call API to follow
-        console.log(`Follow seller ${sellerId}`);
-      }
-    }
-  

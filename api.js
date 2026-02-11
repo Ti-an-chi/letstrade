@@ -169,6 +169,7 @@ const API = {
     return await this._fetch(`/seller/products?${params}`);
   },
   
+  
   /* ---------------- PRODUCT DATA --------------- */
   // 1. PRODUCTS
   async getProductsPaginated(page = 1, limit = 20, filters = {}) {
@@ -262,6 +263,14 @@ const API = {
     return this._fetch('/cart', {
       method: 'DELETE'
     });
+  },
+  
+  async followSeller(sellerId) {
+    const response = await this._fetch('/seller/follow', {
+      method: 'POST', 
+      body: JSON.stringify(sellerId),
+    });
+    return response;
   },
   
   /* ---------------- SELLER ACTIONS --------------- */
