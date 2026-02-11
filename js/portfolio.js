@@ -74,8 +74,8 @@
             <img src="${product.image}" alt="${product.name}">
             <div class="product-overlay">
               <div class="quick-actions">
-                <button class="quick-action-btn" data-action="whatsapp" data-product-id="${product.id}">
-                  <i class="fab fa-whatsapp"></i> Inquire
+                <button class="quick-action-btn" data-action="whatsapp"data-product-id="${product.id}" data-product-name="${product.name}">
+                  <i class="fab fa-whatsapp"></i> Order Now
                 </button>
                 <button class="quick-action-btn" data-action="favorite" data-product-id="${product.id}">
                   <i class="fas fa-heart"></i> Save
@@ -463,4 +463,45 @@ document.querySelector('.submit-review-btn').addEventListener('click', async fun
   
   // Refresh testimonials
   // In production: reload testimonials from API
+});
+
+function orderProduct(productId, productName) {
+  const sellerPhone = '2348123456789'; // From seller data
+  
+  // Create the message template
+  const message = `Hello! I saw "${productName}" on your ONTROPP shop and I'd like to place an order. Product ID: ${productId}`;
+  
+  // Encode for WhatsApp
+  const encodedMessage = encodeURIComponent(message);
+  
+  // Open WhatsApp
+  const whatsappUrl = `https://wa.me/${sellerPhone}?text=${encodedMessage}`;
+  window.open(whatsappUrl, '_blank');
+  
+  // Track order locally (optional)
+  trackOrder(productId, productName);
+}
+
+function trackOrder(productId, productName) {
+  // Store in localStorage to show in user's order history
+  const orders = JSON.parse(localStorage.getItem('userOrders') || '[]');
+  orders.push({
+    id: Date.now(),
+    productId,
+    productName,
+    date: new Date().toISOString(),
+    status: 'pending' // pending, completed, cancelled
+  });
+  localStorage.setItem('userOrders', JSON.stringify(orders));
+  
+  // Notify user
+  showNotification('Order initiated! Opening WhatsApp...');
+}
+
+// Update the event listener for WhatsApp button:
+whatsappBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const productName = this.dataset.productName;
+  orderProduct(productId, productName);
 });
