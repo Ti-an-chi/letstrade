@@ -374,3 +374,93 @@
       shareBtn.addEventListener('click', sharePortfolio);
       heroActions.appendChild(shareBtn);
     }
+    
+    
+    // Star rating system
+let selectedRating = 0;
+
+document.querySelectorAll('.stars i').forEach(star => {
+  star.addEventListener('click', function() {
+    selectedRating = parseInt(this.dataset.rating);
+    
+    // Update stars
+    document.querySelectorAll('.stars i').forEach((s, index) => {
+      if (index < selectedRating) {
+        s.classList.add('active');
+        s.style.color = '#fbbf24';
+      } else {
+        s.classList.remove('active');
+        s.style.color = '#ddd';
+      }
+    });
+    
+    // Update text
+    const texts = [
+      'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'
+    ];
+    document.querySelector('.rating-text').textContent = texts[selectedRating - 1] || 'Tap stars to rate';
+  });
+  
+  // Hover effect
+  star.addEventListener('mouseover', function() {
+    const rating = parseInt(this.dataset.rating);
+    document.querySelectorAll('.stars i').forEach((s, index) => {
+      s.style.color = index < rating ? '#fbbf24' : '#ddd';
+    });
+  });
+  
+  star.addEventListener('mouseout', function() {
+    document.querySelectorAll('.stars i').forEach((s, index) => {
+      s.style.color = index < selectedRating ? '#fbbf24' : '#ddd';
+    });
+  });
+});
+
+// Submit review
+document.querySelector('.submit-review-btn').addEventListener('click', async function() {
+  const reviewText = document.querySelector('.review-textarea').value.trim();
+  
+  if (selectedRating === 0) {
+    alert('Please select a star rating');
+    return;
+  }
+  
+  if (!reviewText) {
+    alert('Please write a review');
+    return;
+  }
+  
+  // In production: Send to your API
+  const reviewData = {
+    sellerId: sellerId,
+    rating: selectedRating,
+    text: reviewText,
+    date: new Date().toISOString().split('T')[0]
+  };
+  
+  // Show loading
+  this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+  this.disabled = true;
+  
+  // Simulate API call
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  
+  // Success
+  alert('Thank you for your review!');
+  
+  // Reset form
+  selectedRating = 0;
+  document.querySelectorAll('.stars i').forEach(s => {
+    s.classList.remove('active');
+    s.style.color = '#ddd';
+  });
+  document.querySelector('.review-textarea').value = '';
+  document.querySelector('.rating-text').textContent = 'Tap stars to rate';
+  
+  // Reset button
+  this.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Review';
+  this.disabled = false;
+  
+  // Refresh testimonials
+  // In production: reload testimonials from API
+});
